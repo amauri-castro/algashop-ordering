@@ -75,8 +75,6 @@ class CustomerTest {
                 c -> assertThat(c.birthDate()).isNull(),
                 c -> assertThat(c.isPromotionNotificationsAllowed()).isFalse()
         );
-
-
     }
 
     @Test
@@ -109,6 +107,48 @@ class CustomerTest {
 
         Assertions.assertThatExceptionOfType(CustomerArchivedException.class)
                 .isThrownBy(customer::disablePromotionNotifications);
+    }
+
+    @Test
+    void given_brandNewCustomer_whenAddLoyaltyPoints_shouldSumPoints() {
+
+        Customer customer = new Customer(
+                IdGenerator.generateTimeBasedUUID(),
+                "John Doe",
+                LocalDate.of(1992, 8, 12),
+                "john.doe@gmail.com",
+                "478-256-2504",
+                "255-08-0578",
+                false,
+                OffsetDateTime.now()
+        );
+
+        customer.addLoyaltyPoints(10);
+        customer.addLoyaltyPoints(20);
+
+        Assertions.assertThat(customer.loyaltyPoints()).isEqualTo(30);
+    }
+
+    @Test
+    void given_brandNewCustomer_whenAddInvalidLoyaltyPoints_shouldGenerateException() {
+
+        Customer customer = new Customer(
+                IdGenerator.generateTimeBasedUUID(),
+                "John Doe",
+                LocalDate.of(1992, 8, 12),
+                "john.doe@gmail.com",
+                "478-256-2504",
+                "255-08-0578",
+                false,
+                OffsetDateTime.now()
+        );
+
+
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> customer.addLoyaltyPoints(0));
+
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> customer.addLoyaltyPoints(-10));
     }
 
 }
