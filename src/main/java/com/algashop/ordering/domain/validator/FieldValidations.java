@@ -10,9 +10,8 @@ public class FieldValidations {
 
     }
 
-    public static void requiredValidEmail(String email) {
+    public static void requiresValidEmail(String email) {
         requiresValidEmail(email, null);
-
     }
 
     public static void requiresValidEmail(String email, String errorMessage) {
