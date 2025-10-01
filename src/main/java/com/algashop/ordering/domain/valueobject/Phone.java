@@ -4,12 +4,11 @@ import java.util.Objects;
 
 public record Phone(String value) {
 
-    public Phone(String value) {
+    public Phone {
         Objects.requireNonNull(value);
         if (value.isBlank()) {
             throw new IllegalArgumentException();
         }
-        this.value = value;
     }
 
     @Override

@@ -4,9 +4,8 @@ import com.algashop.ordering.domain.validator.FieldValidations;
 
 public record Email(String value) {
 
-    public Email(String value) {
+    public Email {
         FieldValidations.requiresValidEmail(value);
-        this.value = value;
     }
 
     @Override
