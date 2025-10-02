@@ -2,6 +2,7 @@ package com.algashop.ordering.domain.entity;
 
 import com.algashop.ordering.domain.exception.CustomerArchivedException;
 import com.algashop.ordering.domain.valueobject.*;
+import lombok.Builder;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -25,23 +26,28 @@ public class Customer {
     private LoyaltyPoints loyaltyPoints;
     private Address address;
 
-    public Customer(CustomerId id, FullName fullName, BirthDate birthDate, Email email,
-                    Phone phone, Document document, Boolean promotionNotificationsAllowed,
-                    OffsetDateTime registeredAt, Address address) {
-        this.setId(id);
-        this.setFullName(fullName);
-        this.setBirthDate(birthDate);
-        this.setEmail(email);
-        this.setPhone(phone);
-        this.setDocument(document);
-        this.setPromotionNotificationsAllowed(promotionNotificationsAllowed);
-        this.setRegisteredAt(registeredAt);
-        this.setArchived(false);
-        this.setLoyaltyPoints(LoyaltyPoints.ZERO);
-        this.setAddress(address);
+    @Builder(builderClassName = "BrandNewCustomerBuild", builderMethodName = "brandNew")
+    private static Customer createBrandNew(FullName fullName, BirthDate birthDate, Email email,
+                                          Phone phone, Document document, Boolean promotionNotificationsAllowed,
+                                          Address address) {
+
+        return new Customer(
+                new CustomerId(),
+                fullName,
+                birthDate,
+                email,
+                phone,
+                document,
+                promotionNotificationsAllowed,
+                false,
+                OffsetDateTime.now(),
+                null,
+                LoyaltyPoints.ZERO,
+                address);
     }
 
-    public Customer(CustomerId id, FullName fullName, BirthDate birthDate, Email email,
+    @Builder(builderClassName = "ExistingCustomerBuild", builderMethodName = "existing")
+    private Customer(CustomerId id, FullName fullName, BirthDate birthDate, Email email,
                     Phone phone, Document document, Boolean promotionNotificationsAllowed,
                     Boolean archived, OffsetDateTime registeredAt, OffsetDateTime archivedAt,
                     LoyaltyPoints loyaltyPoints, Address address) {
