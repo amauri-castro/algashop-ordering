@@ -204,4 +204,25 @@ class OrderTest {
                 .isThrownBy(() -> order.changeShipping(shippingInfo, shippingCost, expectedDeliveryDate));
     }
 
+    @Test
+    public void givenDrafOrder_whenChangeItem_ShouldRecalculate() {
+        Order order = Order.draft(new CustomerId());
+
+        order.addItem(
+                new ProductId(),
+                new ProductName("Mac Mini M4"),
+                new Money("599.00"),
+                new Quantity(2)
+        );
+
+        OrderItem orderItem = order.items().iterator().next();
+
+        order.changeItemQuantity(orderItem.id(), new Quantity(1));
+
+        Assertions.assertWith(order,
+                (o) -> Assertions.assertThat(o.totalAmount()).isEqualTo(new Money("599.00")),
+                (o) -> Assertions.assertThat(o.totalItems()).isEqualTo(new Quantity(1))
+        );
+    }
+
 }
