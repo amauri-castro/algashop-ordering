@@ -33,10 +33,8 @@ public class OrderTestDataBuilder {
          order.changePaymentMethod(paymentMethod);
 
          if (withItems) {
-             order.addItem(new ProductId(), new ProductName("Macbook Pro"),
-                     new Money("1999"), new Quantity(2));
-             order.addItem(new ProductId(), new ProductName("Iphone 17 Pro"),
-                     new Money("1299"), new Quantity(1));
+             order.addItem(ProductTestDataBuilder.aProductMacbook().build(), new Quantity(2));
+             order.addItem(ProductTestDataBuilder.aProductAltIphone().build(), new Quantity(1));
 
          }
 

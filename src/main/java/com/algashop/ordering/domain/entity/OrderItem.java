@@ -1,6 +1,7 @@
 package com.algashop.ordering.domain.entity;
 
 import com.algashop.ordering.domain.valueobject.Money;
+import com.algashop.ordering.domain.valueobject.Product;
 import com.algashop.ordering.domain.valueobject.ProductName;
 import com.algashop.ordering.domain.valueobject.Quantity;
 import com.algashop.ordering.domain.valueobject.id.OrderId;
@@ -36,15 +37,18 @@ public class OrderItem {
     }
 
     @Builder(builderClassName = "brandNewOrderItemBuilder", builderMethodName = "brandNew")
-    private static OrderItem createBrandNew(OrderId orderId, ProductId productId,
-                     ProductName productName, Money price, Quantity quantity) {
+    private static OrderItem createBrandNew(OrderId orderId, Product product, Quantity quantity) {
+
+        Objects.requireNonNull(orderId);
+        Objects.requireNonNull(product);
+        Objects.requireNonNull(quantity);
 
         OrderItem orderItem = new OrderItem(
                 new OrderItemId(),
                 orderId,
-                productId,
-                productName,
-                price,
+                product.id(),
+                product.name(),
+                product.price(),
                 quantity,
                 Money.ZERO
         );

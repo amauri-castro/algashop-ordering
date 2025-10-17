@@ -21,14 +21,10 @@ class OrderTest {
     @Test
     public void shouldAddItem() {
         Order order = Order.draft(new CustomerId());
-        ProductId productId = new ProductId();
+        Product product = ProductTestDataBuilder.aProductAltIphone().build();
+        ProductId productId = product.id();
 
-        order.addItem(
-                productId,
-                new ProductName("Iphone 17"),
-                new Money("1599"),
-                new Quantity(1)
-        );
+        order.addItem(product, new Quantity(1));
 
         Assertions.assertThat(order.items().size()).isEqualTo(1);
 
@@ -38,7 +34,7 @@ class OrderTest {
                 (i) -> Assertions.assertThat(i.id()).isNotNull(),
                 (i) -> Assertions.assertThat(i.productName()).isEqualTo(new ProductName("Iphone 17")),
                 (i) -> Assertions.assertThat(i.productId()).isEqualTo(productId),
-                (i) -> Assertions.assertThat(i.price()).isEqualTo(new Money("1599")),
+                (i) -> Assertions.assertThat(i.price()).isEqualTo(new Money("799")),
                 (i) -> Assertions.assertThat(i.quantity()).isEqualTo(new Quantity(1))
         );
     }
@@ -46,12 +42,10 @@ class OrderTest {
     @Test
     public void shouldGenerateExceptionWhenTryToChangeItemSet() {
         Order order = Order.draft(new CustomerId());
-        ProductId productId = new ProductId();
+        Product product = ProductTestDataBuilder.aProductAltIphone().build();
 
         order.addItem(
-                productId,
-                new ProductName("Iphone 17"),
-                new Money("1599"),
+                product,
                 new Quantity(1)
         );
 
@@ -62,25 +56,20 @@ class OrderTest {
     }
 
     @Test
-    public void shouldGCalculateTotals() {
+    public void shouldCalculateTotals() {
         Order order = Order.draft(new CustomerId());
-        ProductId productId = new ProductId();
 
         order.addItem(
-                productId,
-                new ProductName("Iphone 17"),
-                new Money("999"),
+                ProductTestDataBuilder.aProductAltIphone().build(),
                 new Quantity(1)
         );
 
         order.addItem(
-                productId,
-                new ProductName("Macbook M4"),
-                new Money("1299"),
+                ProductTestDataBuilder.aProductMacbook().build(),
                 new Quantity(1)
         );
 
-        Assertions.assertThat(order.totalAmount()).isEqualTo(new Money("2298"));
+        Assertions.assertThat(order.totalAmount()).isEqualTo(new Money("2098"));
         Assertions.assertThat(order.totalItems()).isEqualTo(new Quantity(2));
     }
 
@@ -209,9 +198,7 @@ class OrderTest {
         Order order = Order.draft(new CustomerId());
 
         order.addItem(
-                new ProductId(),
-                new ProductName("Mac Mini M4"),
-                new Money("599.00"),
+                ProductTestDataBuilder.aProductMacbook().build(),
                 new Quantity(2)
         );
 
@@ -220,7 +207,7 @@ class OrderTest {
         order.changeItemQuantity(orderItem.id(), new Quantity(1));
 
         Assertions.assertWith(order,
-                (o) -> Assertions.assertThat(o.totalAmount()).isEqualTo(new Money("599.00")),
+                (o) -> Assertions.assertThat(o.totalAmount()).isEqualTo(new Money("1299.00")),
                 (o) -> Assertions.assertThat(o.totalItems()).isEqualTo(new Quantity(1))
         );
     }
