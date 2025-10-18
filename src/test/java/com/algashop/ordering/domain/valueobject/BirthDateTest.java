@@ -23,7 +23,7 @@ class BirthDateTest {
     @Test
     void givenLaterBirthDateShouldGenerateExeception() {
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new BirthDate(LocalDate.of(2025, 10, 1)));
+                .isThrownBy(() -> new BirthDate(LocalDate.of(2026, 10, 19)));
     }
 
     @Test
