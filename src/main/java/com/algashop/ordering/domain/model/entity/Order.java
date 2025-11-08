@@ -36,12 +36,15 @@ public class Order implements AggregateRoot<OrderId>{
 
     private Set<OrderItem> items;
 
+    private Long version;
+
     @Builder(builderClassName = "ExistingOrderBuilder", builderMethodName = "existing")
-    public Order(OrderId id, CustomerId customerId, Money totalAmount, Quantity totalItems,
+    public Order(OrderId id, Long version, CustomerId customerId, Money totalAmount, Quantity totalItems,
                  OffsetDateTime placedAt, OffsetDateTime paidAt, OffsetDateTime canceledAt,
                  OffsetDateTime readyAt, Billing billing, Shipping shipping,
                  OrderStatus status, PaymentMethod paymentMethod, Set<OrderItem> items) {
         this.setId(id);
+        this.setVersion(version);
         this.setCustomerId(customerId);
         this.setTotalAmount(totalAmount);
         this.setTotalItems(totalItems);
@@ -59,6 +62,7 @@ public class Order implements AggregateRoot<OrderId>{
     public static Order draft(CustomerId customerId) {
         return new Order(
                 new OrderId(),
+                null,
                 customerId,
                 Money.ZERO,
                 Quantity.ZERO,
@@ -301,6 +305,14 @@ public class Order implements AggregateRoot<OrderId>{
     private void setId(OrderId id) {
         Objects.requireNonNull(id);
         this.id = id;
+    }
+
+    public Long version() {
+        return version;
+    }
+
+    private void setVersion(Long version) {
+        this.version = version;
     }
 
     private void setCustomerId(CustomerId customerId) {

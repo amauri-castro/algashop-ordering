@@ -1,18 +1,18 @@
 package com.algashop.ordering.infrastructure.persistence.repository;
 
-import com.algashop.ordering.domain.model.utility.IdGenerator;
+import com.algashop.ordering.infrastructure.persistence.config.SpringDataAuditingConfig;
 import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntity;
+import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntityDataBuilder;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import org.springframework.context.annotation.Import;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(SpringDataAuditingConfig.class)
 class OrderPersistenceEntityRepositoryIT {
 
     private final OrderPersistenceEntityRepository orderPersistenceEntityRepository;
@@ -24,19 +24,10 @@ class OrderPersistenceEntityRepositoryIT {
 
     @Test
     public void shouldPersist() {
-        long orderId = IdGenerator.generateTSID().toLong();
-        OrderPersistenceEntity entity = OrderPersistenceEntity.builder()
-                .id(orderId)
-                .customerId(IdGenerator.generateTimeBasedUUID())
-                .totalItems(2)
-                .totalAmount(new BigDecimal(1000))
-                .status("DRAFT")
-                .paymentMethod("CREDIT_CARD")
-                .placedAt(OffsetDateTime.now())
-                .build();
+        OrderPersistenceEntity entity = OrderPersistenceEntityDataBuilder.existingOrder().build();
 
         orderPersistenceEntityRepository.saveAndFlush(entity);
-        Assertions.assertThat(orderPersistenceEntityRepository.existsById(orderId)).isTrue();
+        Assertions.assertThat(orderPersistenceEntityRepository.existsById(entity.getId())).isTrue();
     }
 
     @Test
@@ -44,6 +35,16 @@ class OrderPersistenceEntityRepositoryIT {
         long ordersCount = orderPersistenceEntityRepository.count();
 
         Assertions.assertThat(ordersCount).isZero();
+    }
+
+    @Test
+    public void shouldSetAuditingValues() {
+        OrderPersistenceEntity entity = OrderPersistenceEntityDataBuilder.existingOrder().build();
+        entity = orderPersistenceEntityRepository.saveAndFlush(entity);
+
+        Assertions.assertThat(entity.getCreatedByUserId()).isNotNull();
+        Assertions.assertThat(entity.getLastModifiedAt()).isNotNull();
+        Assertions.assertThat(entity.getLastModifiedByUserId()).isNotNull();
     }
 
 }
