@@ -8,7 +8,7 @@ import com.algashop.ordering.domain.model.valueobject.Quantity;
 import com.algashop.ordering.domain.model.valueobject.id.CustomerId;
 import com.algashop.ordering.domain.model.valueobject.id.OrderId;
 import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntity;
-import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntityDataBuilder;
+import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntityTestDataBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +19,7 @@ class OrderPersistenceEntityDisassemblerTest {
 
     @Test
     public void shouldConverFromPersistence() {
-        OrderPersistenceEntity persistenceEntity = OrderPersistenceEntityDataBuilder.existingOrder().build();
+        OrderPersistenceEntity persistenceEntity = OrderPersistenceEntityTestDataBuilder.existingOrder().build();
         Order domainEntity = disassembler.toDomainEntity(persistenceEntity);
 
         assertThat(domainEntity).satisfies(

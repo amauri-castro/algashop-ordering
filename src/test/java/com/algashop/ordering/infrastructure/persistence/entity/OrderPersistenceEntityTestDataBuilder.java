@@ -6,9 +6,9 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Set;
 
-public class OrderPersistenceEntityDataBuilder {
+public class OrderPersistenceEntityTestDataBuilder {
 
-    private OrderPersistenceEntityDataBuilder() {
+    private OrderPersistenceEntityTestDataBuilder() {
     }
 
     public static OrderPersistenceEntity.OrderPersistenceEntityBuilder existingOrder() {

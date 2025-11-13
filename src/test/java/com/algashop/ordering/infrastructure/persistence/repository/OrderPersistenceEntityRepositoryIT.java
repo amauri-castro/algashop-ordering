@@ -2,7 +2,7 @@ package com.algashop.ordering.infrastructure.persistence.repository;
 
 import com.algashop.ordering.infrastructure.persistence.config.SpringDataAuditingConfig;
 import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntity;
-import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntityDataBuilder;
+import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntityTestDataBuilder;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ class OrderPersistenceEntityRepositoryIT {
 
     @Test
     public void shouldPersist() {
-        OrderPersistenceEntity entity = OrderPersistenceEntityDataBuilder.existingOrder().build();
+        OrderPersistenceEntity entity = OrderPersistenceEntityTestDataBuilder.existingOrder().build();
 
         orderPersistenceEntityRepository.saveAndFlush(entity);
         Assertions.assertThat(orderPersistenceEntityRepository.existsById(entity.getId())).isTrue();
@@ -43,7 +43,7 @@ class OrderPersistenceEntityRepositoryIT {
 
     @Test
     public void shouldSetAuditingValues() {
-        OrderPersistenceEntity entity = OrderPersistenceEntityDataBuilder.existingOrder().build();
+        OrderPersistenceEntity entity = OrderPersistenceEntityTestDataBuilder.existingOrder().build();
         entity = orderPersistenceEntityRepository.saveAndFlush(entity);
 
         Assertions.assertThat(entity.getCreatedByUserId()).isNotNull();
