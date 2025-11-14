@@ -1,19 +1,25 @@
 package com.algashop.ordering.infrastructure.persistence.disassembler;
 
 import com.algashop.ordering.domain.model.entity.Order;
+import com.algashop.ordering.domain.model.entity.OrderItem;
 import com.algashop.ordering.domain.model.entity.OrderStatus;
 import com.algashop.ordering.domain.model.entity.PaymentMethod;
 import com.algashop.ordering.domain.model.valueobject.*;
 import com.algashop.ordering.domain.model.valueobject.id.CustomerId;
 import com.algashop.ordering.domain.model.valueobject.id.OrderId;
+import com.algashop.ordering.domain.model.valueobject.id.OrderItemId;
+import com.algashop.ordering.domain.model.valueobject.id.ProductId;
 import com.algashop.ordering.infrastructure.persistence.embeddable.AddressEmbeddable;
 import com.algashop.ordering.infrastructure.persistence.embeddable.BillingEmbeddable;
 import com.algashop.ordering.infrastructure.persistence.embeddable.RecipientEmbeddable;
 import com.algashop.ordering.infrastructure.persistence.embeddable.ShippingEmbeddable;
+import com.algashop.ordering.infrastructure.persistence.entity.OrderItemPersistenceEntity;
 import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class OrderPersistenceEntityDisassembler {
@@ -32,34 +38,51 @@ public class OrderPersistenceEntityDisassembler {
                 .readyAt(persistenceEntity.getReadyAt())
                 .items(new HashSet<>())
                 .version(persistenceEntity.getVersion())
-                .billing(billing(persistenceEntity.getBilling()))
-                .shipping(shipping(persistenceEntity.getShipping()))
+                .billing(toBillingValueObject(persistenceEntity.getBilling()))
+                .shipping(toShippingValueObject(persistenceEntity.getShipping()))
+                .items(toOrderItemSet(persistenceEntity.getItems()))
                 .build();
     }
 
-    private Billing billing(BillingEmbeddable billingEmbeddable) {
+    private Set<OrderItem> toOrderItemSet(Set<OrderItemPersistenceEntity> orderItemPersistenceEntities) {
+        return orderItemPersistenceEntities.stream()
+                .map(orderItem -> OrderItem.existing()
+                        .id(new OrderItemId(orderItem.getId()))
+                        .orderId(new OrderId(orderItem.getOrderId()))
+                        .productId(new ProductId(orderItem.getProductId()))
+                        .productName(new ProductName(orderItem.getProductName()))
+                        .price(new Money(orderItem.getPrice()))
+                        .quantity(new Quantity(orderItem.getQuantity()))
+                        .totalAmount(new Money(orderItem.getTotalAmount()))
+                        .build()
+                )
+                .collect(Collectors.toSet());
+    }
+
+    private Billing toBillingValueObject(BillingEmbeddable billingEmbeddable) {
         if (billingEmbeddable == null) return null;
 
         return Billing.builder()
                 .fullName(new FullName(billingEmbeddable.getFirstName(), billingEmbeddable.getLastName()))
                 .document(new Document(billingEmbeddable.getDocument()))
                 .phone(new Phone(billingEmbeddable.getPhone()))
-                .address(address(billingEmbeddable.getAddress()))
+                .email(new Email(billingEmbeddable.getEmail()))
+                .address(toAddressValueObject(billingEmbeddable.getAddress()))
                 .build();
     }
 
-    private Shipping shipping(ShippingEmbeddable shippingEmbeddable) {
+    private Shipping toShippingValueObject(ShippingEmbeddable shippingEmbeddable) {
         if (shippingEmbeddable == null) return null;
 
         return Shipping.builder()
                 .cost(new Money(shippingEmbeddable.getCost()))
                 .expectedDate(shippingEmbeddable.getExpectedDate())
-                .recipient(recipient(shippingEmbeddable.getRecipient()))
-                .address(address(shippingEmbeddable.getAddress()))
+                .recipient(toRecipientValueObject(shippingEmbeddable.getRecipient()))
+                .address(toAddressValueObject(shippingEmbeddable.getAddress()))
                 .build();
     }
 
-    private Address address(AddressEmbeddable addressEmbeddable) {
+    private Address toAddressValueObject(AddressEmbeddable addressEmbeddable) {
         if (addressEmbeddable == null) return null;
 
         return Address.builder()
@@ -73,7 +96,7 @@ public class OrderPersistenceEntityDisassembler {
                 .build();
     }
 
-    private Recipient recipient(RecipientEmbeddable recipientEmbeddable) {
+    private Recipient toRecipientValueObject(RecipientEmbeddable recipientEmbeddable) {
         if (recipientEmbeddable == null) return null;
 
         return Recipient.builder()

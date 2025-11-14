@@ -6,13 +6,14 @@ import com.algashop.ordering.domain.model.entity.OrderTestDataBuilder;
 import com.algashop.ordering.infrastructure.persistence.assembler.OrderPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.config.SpringDataAuditingConfig;
 import com.algashop.ordering.infrastructure.persistence.disassembler.OrderPersistenceEntityDisassembler;
-import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntity;
 import com.algashop.ordering.infrastructure.persistence.repository.OrderPersistenceEntityRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest
 @Import({
@@ -60,5 +61,15 @@ class OrdersPersistenceProviderIT {
 
     }
 
+    @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public void shouldAddFindAndNotFailWhenNoTransaction() {
+        Order order = OrderTestDataBuilder.anOrder().build();
+        persistenceProvider.add(order);
+
+        Assertions.assertThatNoException().isThrownBy(
+                () -> persistenceProvider.ofId(order.id()).orElseThrow()
+        );
+    }
 
 }

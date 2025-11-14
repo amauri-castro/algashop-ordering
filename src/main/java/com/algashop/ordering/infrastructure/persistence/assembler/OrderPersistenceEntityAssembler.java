@@ -37,8 +37,8 @@ public class OrderPersistenceEntityAssembler {
         orderPersistenceEntity.setPaidAt(order.paidAt());
         orderPersistenceEntity.setReadyAt(order.readyAt());
         orderPersistenceEntity.setVersion(order.version());
-        orderPersistenceEntity.setBilling(billingEmbeddable(order.billing()));
-        orderPersistenceEntity.setShipping(shippingEmbeddable(order.shipping()));
+        orderPersistenceEntity.setBilling(toBillingEmbeddable(order.billing()));
+        orderPersistenceEntity.setShipping(toShippingEmbeddable(order.shipping()));
         Set<OrderItemPersistenceEntity> mergedItems = mergeItems(order, orderPersistenceEntity);
         orderPersistenceEntity.replaceItems(mergedItems);
         return orderPersistenceEntity;
@@ -85,7 +85,7 @@ public class OrderPersistenceEntityAssembler {
         return orderItemPersistenceEntity;
     }
 
-    private BillingEmbeddable billingEmbeddable(Billing billing) {
+    private BillingEmbeddable toBillingEmbeddable(Billing billing) {
         if (billing == null) return null;
 
         return BillingEmbeddable
@@ -94,11 +94,12 @@ public class OrderPersistenceEntityAssembler {
                 .lastName(billing.fullName().lastName())
                 .document(billing.document().value())
                 .phone(billing.phone().value())
+                .email(billing.email().value())
                 .address(addressEmbeddable(billing.address()))
                 .build();
     }
 
-    private ShippingEmbeddable shippingEmbeddable(Shipping shipping) {
+    private ShippingEmbeddable toShippingEmbeddable(Shipping shipping) {
         if (shipping == null) return null;
 
         return ShippingEmbeddable
@@ -106,7 +107,7 @@ public class OrderPersistenceEntityAssembler {
                 .cost(shipping.cost().value())
                 .expectedDate(shipping.expectedDate())
                 .address(addressEmbeddable(shipping.address()))
-                .recipient(recipientEmbeddable(shipping.recipient()))
+                .recipient(toRecipientEmbeddable(shipping.recipient()))
                 .build();
     }
 
@@ -125,7 +126,7 @@ public class OrderPersistenceEntityAssembler {
                 .build();
     }
 
-    private RecipientEmbeddable recipientEmbeddable(Recipient recipient) {
+    private RecipientEmbeddable toRecipientEmbeddable(Recipient recipient) {
         if (recipient == null) return null;
 
         return RecipientEmbeddable
