@@ -27,6 +27,8 @@ public class Customer implements AggregateRoot<CustomerId> {
     private LoyaltyPoints loyaltyPoints;
     private Address address;
 
+    private Long version;
+
     @Builder(builderClassName = "BrandNewCustomerBuild", builderMethodName = "brandNew")
     private static Customer createBrandNew(FullName fullName, BirthDate birthDate, Email email,
                                           Phone phone, Document document, Boolean promotionNotificationsAllowed,
@@ -222,6 +224,14 @@ public class Customer implements AggregateRoot<CustomerId> {
     private void setAddress(Address address) {
         Objects.requireNonNull(address);
         this.address = address;
+    }
+
+    public Long version() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     private void verifyIfChangeable() {

@@ -95,7 +95,7 @@ public class OrderPersistenceEntityAssembler {
                 .document(billing.document().value())
                 .phone(billing.phone().value())
                 .email(billing.email().value())
-                .address(addressEmbeddable(billing.address()))
+                .address(toAddressEmbeddable(billing.address()))
                 .build();
     }
 
@@ -106,12 +106,12 @@ public class OrderPersistenceEntityAssembler {
                 .builder()
                 .cost(shipping.cost().value())
                 .expectedDate(shipping.expectedDate())
-                .address(addressEmbeddable(shipping.address()))
+                .address(toAddressEmbeddable(shipping.address()))
                 .recipient(toRecipientEmbeddable(shipping.recipient()))
                 .build();
     }
 
-    private AddressEmbeddable addressEmbeddable(Address address) {
+    private AddressEmbeddable toAddressEmbeddable(Address address) {
         if (address == null) return null;
 
         return AddressEmbeddable
