@@ -1,13 +1,18 @@
 package com.algashop.ordering.domain.model.repository;
 
+import com.algashop.ordering.domain.model.entity.CustomerTestDataBuilder;
 import com.algashop.ordering.domain.model.entity.Order;
 import com.algashop.ordering.domain.model.entity.OrderStatus;
 import com.algashop.ordering.domain.model.entity.OrderTestDataBuilder;
 import com.algashop.ordering.domain.model.valueobject.id.OrderId;
+import com.algashop.ordering.infrastructure.persistence.assembler.CustomerPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.assembler.OrderPersistenceEntityAssembler;
+import com.algashop.ordering.infrastructure.persistence.disassembler.CustomerPersistenceEntityDisassembler;
 import com.algashop.ordering.infrastructure.persistence.disassembler.OrderPersistenceEntityDisassembler;
+import com.algashop.ordering.infrastructure.persistence.provider.CustomersPersistenceProvider;
 import com.algashop.ordering.infrastructure.persistence.provider.OrdersPersistenceProvider;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -19,16 +24,32 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import({OrdersPersistenceProvider.class,
+@Import({
+        OrdersPersistenceProvider.class,
         OrderPersistenceEntityAssembler.class,
-        OrderPersistenceEntityDisassembler.class})
+        OrderPersistenceEntityDisassembler.class,
+        CustomersPersistenceProvider.class,
+        CustomerPersistenceEntityAssembler.class,
+        CustomerPersistenceEntityDisassembler.class
+})
 class OrdersIT {
 
     private Orders orders;
+    private Customers customers;
 
     @Autowired
-    public OrdersIT(Orders orders) {
+    public OrdersIT(Orders orders, Customers customers) {
         this.orders = orders;
+        this.customers = customers;
+    }
+
+    @BeforeEach
+    public void setup() {
+        if (!customers.exists(CustomerTestDataBuilder.DEFAULT_CUSTOMER_ID)) {
+            customers.add(
+                    CustomerTestDataBuilder.existingCustomer().build()
+            );
+        }
     }
 
     @Test

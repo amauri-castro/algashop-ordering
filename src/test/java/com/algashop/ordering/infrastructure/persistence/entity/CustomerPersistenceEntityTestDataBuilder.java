@@ -1,19 +1,20 @@
 package com.algashop.ordering.infrastructure.persistence.entity;
 
-import com.algashop.ordering.domain.model.utility.IdGenerator;
 import com.algashop.ordering.infrastructure.persistence.embeddable.AddressEmbeddable;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+
+import static com.algashop.ordering.domain.model.entity.CustomerTestDataBuilder.DEFAULT_CUSTOMER_ID;
 
 public class CustomerPersistenceEntityTestDataBuilder {
 
     private CustomerPersistenceEntityTestDataBuilder() {
     }
 
-    public static CustomerPersistenceEntity.CustomerPersistenceEntityBuilder existing() {
+    public static CustomerPersistenceEntity.CustomerPersistenceEntityBuilder aCustomer() {
         return CustomerPersistenceEntity.builder()
-                .id(IdGenerator.generateTimeBasedUUID())
+                .id(DEFAULT_CUSTOMER_ID.value())
                 .firstName("Jhon")
                 .lastName("Doe")
                 .birthDate(LocalDate.now().minusYears(20))

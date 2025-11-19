@@ -3,8 +3,6 @@ package com.algashop.ordering.infrastructure.persistence.repository;
 import com.algashop.ordering.infrastructure.persistence.config.SpringDataAuditingConfig;
 import com.algashop.ordering.infrastructure.persistence.entity.CustomerPersistenceEntity;
 import com.algashop.ordering.infrastructure.persistence.entity.CustomerPersistenceEntityTestDataBuilder;
-import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntity;
-import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntityTestDataBuilder;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,7 @@ class CustomerPersistenceEntityRepositoryIT {
 
     @Test
     public void shouldPersist() {
-        CustomerPersistenceEntity entity = CustomerPersistenceEntityTestDataBuilder.existing().build();
+        CustomerPersistenceEntity entity = CustomerPersistenceEntityTestDataBuilder.aCustomer().build();
 
         persistenceEntityRepository.saveAndFlush(entity);
         Assertions.assertThat(persistenceEntityRepository.existsById(entity.getId())).isTrue();
@@ -46,7 +44,7 @@ class CustomerPersistenceEntityRepositoryIT {
 
     @Test
     public void shouldSetAuditingValues() {
-        CustomerPersistenceEntity entity = CustomerPersistenceEntityTestDataBuilder.existing().build();
+        CustomerPersistenceEntity entity = CustomerPersistenceEntityTestDataBuilder.aCustomer().build();
         entity = persistenceEntityRepository.saveAndFlush(entity);
 
         Assertions.assertThat(entity.getCreatedByUserId()).isNotNull();
