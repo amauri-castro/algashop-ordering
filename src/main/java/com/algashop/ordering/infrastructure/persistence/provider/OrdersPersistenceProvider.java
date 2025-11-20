@@ -2,6 +2,8 @@ package com.algashop.ordering.infrastructure.persistence.provider;
 
 import com.algashop.ordering.domain.model.entity.Order;
 import com.algashop.ordering.domain.model.repository.Orders;
+import com.algashop.ordering.domain.model.valueobject.Money;
+import com.algashop.ordering.domain.model.valueobject.id.CustomerId;
 import com.algashop.ordering.domain.model.valueobject.id.OrderId;
 import com.algashop.ordering.infrastructure.persistence.assembler.OrderPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.disassembler.OrderPersistenceEntityDisassembler;
@@ -15,7 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.time.Year;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -56,6 +62,31 @@ public class OrdersPersistenceProvider implements Orders {
                 );
     }
 
+    @Override
+    public List<Order> placedByCustomerInYear(CustomerId customerId, Year year) {
+
+
+        List<OrderPersistenceEntity> entities = persistenceRepository.placedByCustomerInYear(
+                customerId.value(),
+                year.getValue()
+        );
+
+        return entities.stream()
+                .map(disassembler::toDomainEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public long salesQuantityByCustomerInYear(CustomerId customerId, Year year) {
+        return persistenceRepository.salesQuantityByCustomerInYear(customerId.value(), year.getValue());
+    }
+
+    @Override
+    public Money totalSoldForCustomer(CustomerId customerId) {
+        BigDecimal total = persistenceRepository.totalSoldForCustomer(customerId.value());
+        return new Money(total);
+    }
+
     private void update(Order aggregateRoot, OrderPersistenceEntity persistenceEntity) {
         persistenceEntity = assembler.merge(persistenceEntity, aggregateRoot);
         entityManager.detach(persistenceEntity);
@@ -76,6 +107,5 @@ public class OrdersPersistenceProvider implements Orders {
         ReflectionUtils.setField(version, aggregateRoot, persistenceEntity.getVersion());
         version.setAccessible(false);
     }
-
 
 }

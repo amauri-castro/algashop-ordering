@@ -46,14 +46,15 @@ public class Customer implements AggregateRoot<CustomerId> {
                 OffsetDateTime.now(),
                 null,
                 LoyaltyPoints.ZERO,
-                address);
+                address,
+                null);
     }
 
     @Builder(builderClassName = "ExistingCustomerBuild", builderMethodName = "existing")
     private Customer(CustomerId id, FullName fullName, BirthDate birthDate, Email email,
                     Phone phone, Document document, Boolean promotionNotificationsAllowed,
                     Boolean archived, OffsetDateTime registeredAt, OffsetDateTime archivedAt,
-                    LoyaltyPoints loyaltyPoints, Address address) {
+                    LoyaltyPoints loyaltyPoints, Address address, Long version) {
         this.setId(id);
         this.setFullName(fullName);
         this.setBirthDate(birthDate);
@@ -66,6 +67,7 @@ public class Customer implements AggregateRoot<CustomerId> {
         this.setArchivedAt(archivedAt);
         this.setLoyaltyPoints(loyaltyPoints);
         this.setAddress(address);
+        this.setVersion(version);
     }
 
     public void addLoyaltyPoints(LoyaltyPoints loyaltyPointsAdded) {
