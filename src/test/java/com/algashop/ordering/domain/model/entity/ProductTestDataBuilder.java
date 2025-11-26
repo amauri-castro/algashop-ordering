@@ -35,4 +35,12 @@ public class ProductTestDataBuilder {
                 .price(new Money("799"))
                 .inStock(true);
     }
+
+    public static Product.ProductBuilder aProductAltRamMemory() {
+        return Product.builder()
+                .id(DEFAULT_PRODUCT_ID)
+                .name(new ProductName("Corsair 16GB DDR5"))
+                .price(new Money("489"))
+                .inStock(true);
+    }
 }
