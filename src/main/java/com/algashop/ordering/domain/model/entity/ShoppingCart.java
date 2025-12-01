@@ -80,7 +80,7 @@ public class ShoppingCart implements AggregateRoot<ShoppingCartId> {
         searchItemByProduct(product.id())
                 .ifPresentOrElse(
                         (i) -> updateItem(i, product, quantity),
-                        () -> inserItem(shoppingCartItem));
+                        () -> insertItem(shoppingCartItem));
 
         this.recalculateTotals();
     }
@@ -151,7 +151,7 @@ public class ShoppingCart implements AggregateRoot<ShoppingCartId> {
         shoppingCartItem.changeQuantity(shoppingCartItem.quantity().add(quantity));
     }
 
-    private void inserItem(ShoppingCartItem shoppingCartItem) {
+    private void insertItem(ShoppingCartItem shoppingCartItem) {
         this.items.add(shoppingCartItem);
     }
 

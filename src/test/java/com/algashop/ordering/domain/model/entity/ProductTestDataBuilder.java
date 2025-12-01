@@ -22,7 +22,7 @@ public class ProductTestDataBuilder {
 
     public static Product.ProductBuilder aProductUnavailable() {
         return Product.builder()
-                .id(DEFAULT_PRODUCT_ID)
+                .id(new ProductId())
                 .name(new ProductName("Ryzen 7 9800X3D"))
                 .price(new Money("899"))
                 .inStock(false);
@@ -30,7 +30,7 @@ public class ProductTestDataBuilder {
 
     public static Product.ProductBuilder aProductAltIphone() {
         return Product.builder()
-                .id(DEFAULT_PRODUCT_ID)
+                .id(new ProductId())
                 .name(new ProductName("Iphone 17"))
                 .price(new Money("799"))
                 .inStock(true);
@@ -38,7 +38,7 @@ public class ProductTestDataBuilder {
 
     public static Product.ProductBuilder aProductAltRamMemory() {
         return Product.builder()
-                .id(DEFAULT_PRODUCT_ID)
+                .id(new ProductId())
                 .name(new ProductName("Corsair 16GB DDR5"))
                 .price(new Money("489"))
                 .inStock(true);
