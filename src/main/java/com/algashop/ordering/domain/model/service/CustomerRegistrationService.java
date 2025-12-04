@@ -3,14 +3,16 @@ package com.algashop.ordering.domain.model.service;
 import com.algashop.ordering.domain.model.entity.Customer;
 import com.algashop.ordering.domain.model.exception.CustomerEmailIsInUseException;
 import com.algashop.ordering.domain.model.repository.Customers;
+import com.algashop.ordering.domain.model.utility.DomainService;
 import com.algashop.ordering.domain.model.valueobject.*;
 import com.algashop.ordering.domain.model.valueobject.id.CustomerId;
 import lombok.RequiredArgsConstructor;
 
+@DomainService
 @RequiredArgsConstructor
 public class CustomerRegistrationService {
 
-    private Customers customers;
+    private final Customers customers;
 
     public Customer register(
             FullName fullName, BirthDate birthDate, Email email,

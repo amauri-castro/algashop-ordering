@@ -5,7 +5,9 @@ import com.algashop.ordering.domain.model.valueobject.*;
 import com.algashop.ordering.domain.model.valueobject.id.CustomerId;
 import com.algashop.ordering.infrastructure.persistence.embeddable.AddressEmbeddable;
 import com.algashop.ordering.infrastructure.persistence.entity.CustomerPersistenceEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CustomerPersistenceEntityDisassembler {
 
     public Customer toDomainEntity(CustomerPersistenceEntity persistenceEntity) {
