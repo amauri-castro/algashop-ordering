@@ -41,4 +41,7 @@ public class ErrorMessages {
 
     public static final String ERROR_SHOPPING_CART_ITEM_INCOMPATIBLE_PRODUCT
             = "Shopping Cart %s cannot be updated, incompatible product %s";
+
+    public static final String ERROR_SHOPPING_CART_CANT_PROCEED_TO_CHECKOUT
+            = "Shopping Cart %s cannot be proceeded to checkout";
 }
