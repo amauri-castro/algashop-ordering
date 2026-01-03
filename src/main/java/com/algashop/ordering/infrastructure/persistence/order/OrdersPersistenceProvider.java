@@ -1,14 +1,10 @@
-package com.algashop.ordering.infrastructure.persistence.provider;
+package com.algashop.ordering.infrastructure.persistence.order;
 
 import com.algashop.ordering.domain.model.order.Order;
 import com.algashop.ordering.domain.model.order.Orders;
 import com.algashop.ordering.domain.model.commons.Money;
 import com.algashop.ordering.domain.model.customer.CustomerId;
 import com.algashop.ordering.domain.model.order.OrderId;
-import com.algashop.ordering.infrastructure.persistence.assembler.OrderPersistenceEntityAssembler;
-import com.algashop.ordering.infrastructure.persistence.disassembler.OrderPersistenceEntityDisassembler;
-import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntity;
-import com.algashop.ordering.infrastructure.persistence.repository.OrderPersistenceEntityRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

@@ -1,6 +1,8 @@
-package com.algashop.ordering.infrastructure.persistence.embeddable;
+package com.algashop.ordering.infrastructure.persistence.order;
 
+import com.algashop.ordering.infrastructure.persistence.commons.AddressEmbeddable;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
-public class RecipientEmbeddable {
+public class BillingEmbeddable {
     private String firstName;
     private String lastName;
     private String document;
     private String phone;
+    private String email;
+
+    @Embedded
+    private AddressEmbeddable address;
 }

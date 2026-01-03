@@ -1,6 +1,5 @@
-package com.algashop.ordering.infrastructure.persistence.repository;
+package com.algashop.ordering.infrastructure.persistence.customer;
 
-import com.algashop.ordering.infrastructure.persistence.entity.CustomerPersistenceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,10 +1,8 @@
-package com.algashop.ordering.infrastructure.persistence.assembler;
+package com.algashop.ordering.infrastructure.persistence.shoppingcart;
 
 import com.algashop.ordering.domain.model.shoppingcart.ShoppingCart;
 import com.algashop.ordering.domain.model.shoppingcart.ShoppingCartItem;
-import com.algashop.ordering.infrastructure.persistence.entity.ShoppingCartItemPersistenceEntity;
-import com.algashop.ordering.infrastructure.persistence.entity.ShoppingCartPersistenceEntity;
-import com.algashop.ordering.infrastructure.persistence.repository.CustomerPersistenceEntityRepository;
+import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

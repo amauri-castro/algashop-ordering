@@ -1,4 +1,4 @@
-package com.algashop.ordering.infrastructure.persistence.entity;
+package com.algashop.ordering.infrastructure.persistence.order;
 
 import jakarta.persistence.*;
 import lombok.*;

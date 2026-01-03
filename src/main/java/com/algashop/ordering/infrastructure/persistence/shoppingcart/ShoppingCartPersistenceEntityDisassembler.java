@@ -1,4 +1,4 @@
-package com.algashop.ordering.infrastructure.persistence.disassembler;
+package com.algashop.ordering.infrastructure.persistence.shoppingcart;
 
 import com.algashop.ordering.domain.model.shoppingcart.ShoppingCart;
 import com.algashop.ordering.domain.model.shoppingcart.ShoppingCartItem;
@@ -9,8 +9,6 @@ import com.algashop.ordering.domain.model.customer.CustomerId;
 import com.algashop.ordering.domain.model.product.ProductId;
 import com.algashop.ordering.domain.model.shoppingcart.ShoppingCartId;
 import com.algashop.ordering.domain.model.shoppingcart.ShoppingCartItemId;
-import com.algashop.ordering.infrastructure.persistence.entity.ShoppingCartItemPersistenceEntity;
-import com.algashop.ordering.infrastructure.persistence.entity.ShoppingCartPersistenceEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;

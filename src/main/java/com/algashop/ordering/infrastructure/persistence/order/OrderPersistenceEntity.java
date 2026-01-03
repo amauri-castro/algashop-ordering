@@ -1,7 +1,6 @@
-package com.algashop.ordering.infrastructure.persistence.entity;
+package com.algashop.ordering.infrastructure.persistence.order;
 
-import com.algashop.ordering.infrastructure.persistence.embeddable.BillingEmbeddable;
-import com.algashop.ordering.infrastructure.persistence.embeddable.ShippingEmbeddable;
+import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;

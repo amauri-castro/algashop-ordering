@@ -1,13 +1,9 @@
-package com.algashop.ordering.infrastructure.persistence.provider;
+package com.algashop.ordering.infrastructure.persistence.shoppingcart;
 
 import com.algashop.ordering.domain.model.shoppingcart.ShoppingCart;
 import com.algashop.ordering.domain.model.shoppingcart.ShoppingCarts;
 import com.algashop.ordering.domain.model.customer.CustomerId;
 import com.algashop.ordering.domain.model.shoppingcart.ShoppingCartId;
-import com.algashop.ordering.infrastructure.persistence.assembler.ShoppingCartPersistenceEntityAssembler;
-import com.algashop.ordering.infrastructure.persistence.disassembler.ShoppingCartPersistenceEntityDisassembler;
-import com.algashop.ordering.infrastructure.persistence.entity.ShoppingCartPersistenceEntity;
-import com.algashop.ordering.infrastructure.persistence.repository.ShoppingCartPersistenceEntityRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
