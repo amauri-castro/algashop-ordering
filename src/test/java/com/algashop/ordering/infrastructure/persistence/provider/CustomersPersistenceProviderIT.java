@@ -1,8 +1,8 @@
 package com.algashop.ordering.infrastructure.persistence.provider;
 
-import com.algashop.ordering.domain.model.entity.Customer;
-import com.algashop.ordering.domain.model.entity.CustomerTestDataBuilder;
-import com.algashop.ordering.domain.model.valueobject.Email;
+import com.algashop.ordering.domain.model.customer.Customer;
+import com.algashop.ordering.domain.model.customer.CustomerTestDataBuilder;
+import com.algashop.ordering.domain.model.commons.Email;
 import com.algashop.ordering.infrastructure.persistence.assembler.CustomerPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.config.SpringDataAuditingConfig;
 import com.algashop.ordering.infrastructure.persistence.disassembler.CustomerPersistenceEntityDisassembler;

@@ -1,9 +1,9 @@
 package com.algashop.ordering.infrastructure.persistence.provider;
 
-import com.algashop.ordering.domain.model.entity.CustomerTestDataBuilder;
-import com.algashop.ordering.domain.model.entity.Order;
-import com.algashop.ordering.domain.model.entity.OrderStatus;
-import com.algashop.ordering.domain.model.entity.OrderTestDataBuilder;
+import com.algashop.ordering.domain.model.customer.CustomerTestDataBuilder;
+import com.algashop.ordering.domain.model.order.Order;
+import com.algashop.ordering.domain.model.order.OrderStatus;
+import com.algashop.ordering.domain.model.order.OrderTestDataBuilder;
 import com.algashop.ordering.infrastructure.persistence.assembler.CustomerPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.assembler.OrderPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.config.SpringDataAuditingConfig;

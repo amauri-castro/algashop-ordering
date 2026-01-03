@@ -16,5 +16,5 @@ spring:
     show-sql: 'true'
 algashop:
   integrations:
-    shipping.provider: "RAPIDEX"
+    shipping.provider: "FAKE"
     rapidex.url: "http://localhost:8080"

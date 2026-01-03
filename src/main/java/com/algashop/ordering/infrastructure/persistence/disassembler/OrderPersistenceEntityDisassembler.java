@@ -1,14 +1,12 @@
 package com.algashop.ordering.infrastructure.persistence.disassembler;
 
-import com.algashop.ordering.domain.model.entity.Order;
-import com.algashop.ordering.domain.model.entity.OrderItem;
-import com.algashop.ordering.domain.model.entity.OrderStatus;
-import com.algashop.ordering.domain.model.entity.PaymentMethod;
-import com.algashop.ordering.domain.model.valueobject.*;
-import com.algashop.ordering.domain.model.valueobject.id.CustomerId;
-import com.algashop.ordering.domain.model.valueobject.id.OrderId;
-import com.algashop.ordering.domain.model.valueobject.id.OrderItemId;
-import com.algashop.ordering.domain.model.valueobject.id.ProductId;
+import com.algashop.ordering.domain.model.commons.*;
+import com.algashop.ordering.domain.model.order.*;
+import com.algashop.ordering.domain.model.product.ProductName;
+import com.algashop.ordering.domain.model.customer.CustomerId;
+import com.algashop.ordering.domain.model.order.OrderId;
+import com.algashop.ordering.domain.model.order.OrderItemId;
+import com.algashop.ordering.domain.model.product.ProductId;
 import com.algashop.ordering.infrastructure.persistence.embeddable.AddressEmbeddable;
 import com.algashop.ordering.infrastructure.persistence.embeddable.BillingEmbeddable;
 import com.algashop.ordering.infrastructure.persistence.embeddable.RecipientEmbeddable;

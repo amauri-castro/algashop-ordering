@@ -1,16 +1,15 @@
 package com.algashop.ordering.infrastructure.persistence.assembler;
 
-import com.algashop.ordering.domain.model.entity.Order;
-import com.algashop.ordering.domain.model.entity.OrderItem;
-import com.algashop.ordering.domain.model.valueobject.Address;
-import com.algashop.ordering.domain.model.valueobject.Billing;
-import com.algashop.ordering.domain.model.valueobject.Recipient;
-import com.algashop.ordering.domain.model.valueobject.Shipping;
+import com.algashop.ordering.domain.model.order.Order;
+import com.algashop.ordering.domain.model.order.OrderItem;
+import com.algashop.ordering.domain.model.commons.Address;
+import com.algashop.ordering.domain.model.order.Billing;
+import com.algashop.ordering.domain.model.order.Recipient;
+import com.algashop.ordering.domain.model.order.Shipping;
 import com.algashop.ordering.infrastructure.persistence.embeddable.AddressEmbeddable;
 import com.algashop.ordering.infrastructure.persistence.embeddable.BillingEmbeddable;
 import com.algashop.ordering.infrastructure.persistence.embeddable.RecipientEmbeddable;
 import com.algashop.ordering.infrastructure.persistence.embeddable.ShippingEmbeddable;
-import com.algashop.ordering.infrastructure.persistence.entity.CustomerPersistenceEntity;
 import com.algashop.ordering.infrastructure.persistence.entity.OrderItemPersistenceEntity;
 import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntity;
 import com.algashop.ordering.infrastructure.persistence.repository.CustomerPersistenceEntityRepository;
