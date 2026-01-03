@@ -1,4 +1,4 @@
-package com.algashop.ordering.infrastructure.fake;
+package com.algashop.ordering.infrastructure.shipping.client.fake;
 
 import com.algashop.ordering.domain.model.order.shipping.ShippingCostService;
 import com.algashop.ordering.domain.model.commons.Money;

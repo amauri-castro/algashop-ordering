@@ -1,4 +1,4 @@
-package com.algashop.ordering.infrastructure.fake;
+package com.algashop.ordering.infrastructure.product.client.fake;
 
 import com.algashop.ordering.domain.model.product.ProductCatalogService;
 import com.algashop.ordering.domain.model.commons.Money;
