@@ -9,7 +9,7 @@ import com.algashop.ordering.domain.model.order.shipping.ShippingCostService;
 import com.algashop.ordering.domain.model.product.Product;
 import com.algashop.ordering.domain.model.product.ProductCatalogService;
 import com.algashop.ordering.domain.model.product.ProductId;
-import com.algashop.ordering.domain.model.product.ProductNotFoundExeption;
+import com.algashop.ordering.domain.model.product.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,7 +66,7 @@ public class BuyNowApplicationService {
 
     private Product findProduct(ProductId productId) {
         return productCatalogService.ofId(productId)
-                .orElseThrow(() -> new ProductNotFoundExeption());
+                .orElseThrow(() -> new ProductNotFoundException());
     }
 
 }
