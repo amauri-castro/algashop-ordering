@@ -47,7 +47,7 @@ public class CustomerManagementApplicationService {
         return customer.id().value();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public CustomerOutput findById(UUID customerId) {
         Objects.requireNonNull(customerId);
         Customer customer = customers.ofId(new CustomerId(customerId))
@@ -85,6 +85,15 @@ public class CustomerManagementApplicationService {
                 .zipCode(new ZipCode(address.getZipCode()))
                 .build());
 
+        customers.add(customer);
+    }
+
+    @Transactional
+    public void archive(UUID rawCustomerId) {
+        Customer customer = customers.ofId(new CustomerId(rawCustomerId))
+                .orElseThrow(() -> new CustomerNotFoundException());
+
+        customer.archive();
         customers.add(customer);
     }
 }
