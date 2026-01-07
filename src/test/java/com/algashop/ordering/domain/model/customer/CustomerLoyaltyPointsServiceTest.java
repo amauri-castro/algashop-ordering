@@ -21,7 +21,7 @@ class CustomerLoyaltyPointsServiceTest {
 
         customerLoyaltyPointsService.addPoints(customer, order);
 
-        Assertions.assertThat(customer.loyaltyPoints()).isEqualTo(new LoyaltyPoints(30));
+        Assertions.assertThat(customer.loyaltyPoints()).isEqualTo(new LoyaltyPoints(15));
     }
 
     @Test

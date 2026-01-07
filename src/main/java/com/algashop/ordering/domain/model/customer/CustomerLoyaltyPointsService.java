@@ -12,7 +12,7 @@ public class CustomerLoyaltyPointsService {
 
     private static final LoyaltyPoints basePoints = new LoyaltyPoints(5);
 
-    private static final Money expectedAmountToGivePoints = new Money("500");
+    private static final Money expectedAmountToGivePoints = new Money("1000");
 
     public void addPoints(Customer customer, Order order) {
         Objects.requireNonNull(customer);
@@ -23,7 +23,7 @@ public class CustomerLoyaltyPointsService {
         }
 
         if (!order.isReady()) {
-            throw new CantAddLoyaltyPointOrderIsNotReadyException();
+            throw new CantAddLoyaltyPointsOrderIsNotReadyException();
         }
 
         customer.addLoyaltyPoints(calculatePoints(order));
