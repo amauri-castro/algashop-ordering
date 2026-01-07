@@ -138,4 +138,75 @@ class CustomerManagementApplicationServiceIT {
     }
 
 
+    @Test
+    public void shouldChangeEmail() {
+        CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
+
+        UUID customerId = customerManagementApplicationService.create(input);
+        Assertions.assertThat(customerId).isNotNull();
+
+        customerManagementApplicationService.changeEmail(customerId, "testemail@gmail.com");
+
+        CustomerOutput changedCustomer = customerManagementApplicationService.findById(customerId);
+
+        Assertions.assertThat(changedCustomer.getEmail()).isEqualTo("testemail@gmail.com");
+    }
+
+    @Test
+    public void shouldThrowCustomerNotFoundExceptionWhenChangeEmailOfNonExistingCustomer() {
+        UUID nonExistingId = UUID.randomUUID();
+
+        Assertions.assertThatExceptionOfType(CustomerNotFoundException.class)
+                .isThrownBy(() -> customerManagementApplicationService
+                        .changeEmail(nonExistingId, "testemail@gmail.com"));
+    }
+
+    @Test
+    public void shouldThrowCustomerArchivedExceptionWhenChangeEmailOfArchivedCustomer() {
+        CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
+        UUID customerId = customerManagementApplicationService.create(input);
+        Assertions.assertThat(customerId).isNotNull();
+
+        customerManagementApplicationService.archive(customerId);
+
+        Assertions.assertThatExceptionOfType(CustomerArchivedException.class)
+                .isThrownBy(() -> customerManagementApplicationService
+                        .changeEmail(customerId, "testemail@gmail.com"));
+    }
+
+    @Test
+    public void shouldTrownIllegalArgumentExceptionWhenInvalidEmail() {
+        CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
+
+        UUID customerId = customerManagementApplicationService.create(input);
+        Assertions.assertThat(customerId).isNotNull();
+
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
+                        .isThrownBy(() -> customerManagementApplicationService
+                                .changeEmail(customerId, "testemail.com")
+                        );
+
+    }
+
+    @Test
+    public void shouldThrowCustomerEmailIsInUseExceptionWhenReuseEmail() {
+        CustomerInput input1 = CustomerInputTestDataBuilder.aCustomer().build();
+        CustomerInput input2 = CustomerInputTestDataBuilder.aCustomer()
+                .email("jonhcena@gmail.com")
+                .build();
+
+        UUID customerId1 = customerManagementApplicationService.create(input1);
+        UUID customerId2 = customerManagementApplicationService.create(input2);
+
+        Assertions.assertThat(customerId1).isNotNull();
+        Assertions.assertThat(customerId2).isNotNull();
+
+        Assertions.assertThatExceptionOfType(CustomerEmailIsInUseException.class)
+                        .isThrownBy(() -> customerManagementApplicationService
+                                .changeEmail(customerId2, "johndoe@gmail.com")
+                        );
+
+    }
+
+
 }
