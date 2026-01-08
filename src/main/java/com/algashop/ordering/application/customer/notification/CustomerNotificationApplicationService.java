@@ -2,6 +2,13 @@ package com.algashop.ordering.application.customer.notification;
 
 import java.util.UUID;
 
-public interface CustomerNotificationService {
-    void notifyNewRegistration(UUID customerId);
+public interface CustomerNotificationApplicationService {
+
+    void notifyNewRegistration(NotifyNewRegistrationInput input);
+
+    record NotifyNewRegistrationInput(
+            UUID customerId,
+            String firstName,
+            String email
+    ) {}
 }
