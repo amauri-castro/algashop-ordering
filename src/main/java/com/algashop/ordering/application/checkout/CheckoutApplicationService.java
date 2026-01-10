@@ -2,6 +2,9 @@ package com.algashop.ordering.application.checkout;
 
 import com.algashop.ordering.domain.model.commons.Address;
 import com.algashop.ordering.domain.model.commons.ZipCode;
+import com.algashop.ordering.domain.model.customer.Customer;
+import com.algashop.ordering.domain.model.customer.CustomerNotFoundException;
+import com.algashop.ordering.domain.model.customer.Customers;
 import com.algashop.ordering.domain.model.order.*;
 import com.algashop.ordering.domain.model.order.shipping.OriginAddressService;
 import com.algashop.ordering.domain.model.order.shipping.ShippingCostService;
@@ -22,6 +25,7 @@ public class CheckoutApplicationService {
 
     private final Orders orders;
     private final ShoppingCarts shoppingCarts;
+    private final Customers customers;
     private final CheckoutService checkoutService;
 
     private final BillingInputDisassembler billingInputDisassembler;
@@ -36,9 +40,10 @@ public class CheckoutApplicationService {
         Objects.requireNonNull(input);
         PaymentMethod paymentMethod = PaymentMethod.valueOf(input.getPaymentMethod());
 
-
         ShoppingCart shoppingCart = shoppingCarts.ofId(new ShoppingCartId(input.getShoppingCartId()))
                 .orElseThrow(() -> new ShoppingCartNotFoundException());
+
+        Customer customer = customers.ofId(shoppingCart.customerId()).orElseThrow(() -> new CustomerNotFoundException());
 
         var calculationResult = calculateShippingCost(input.getShipping());
 
@@ -46,6 +51,7 @@ public class CheckoutApplicationService {
         Shipping shipping = shippingInputDisassembler.toDomainModel(input.getShipping(), calculationResult);
 
         Order order = checkoutService.checkout(
+                customer,
                 shoppingCart,
                 billing,
                 shipping,
