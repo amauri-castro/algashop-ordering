@@ -1,33 +1,27 @@
 package com.algashop.ordering.presentation;
 
 import com.algashop.ordering.application.customer.management.CustomerInput;
+import com.algashop.ordering.application.customer.management.CustomerManagementApplicationService;
 import com.algashop.ordering.application.customer.query.CustomerOutput;
+import com.algashop.ordering.application.customer.query.CustomerQueryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/customers")
+@RequiredArgsConstructor
 public class CustomerController {
+
+    private final CustomerManagementApplicationService customerManagementApplicationService;
+    private final CustomerQueryService customerQueryService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerOutput create(@RequestBody CustomerInput input) {
-        return CustomerOutput.builder()
-                .id(UUID.randomUUID())
-                .firstName(input.getFirstName())
-                .lastName(input.getLastName())
-                .phone(input.getPhone())
-                .email(input.getEmail())
-                .birthDate(input.getBirthDate())
-                .document(input.getDocument())
-                .promotionNotificationsAllowed(input.getPromotionNotificationsAllowed())
-                .registeredAt(OffsetDateTime.now())
-                .archived(false)
-                .loyaltyPoints(0)
-                .address(input.getAddress())
-                .build();
+        UUID customerId = customerManagementApplicationService.create(input);
+        return customerQueryService.findById(customerId);
     }
 }

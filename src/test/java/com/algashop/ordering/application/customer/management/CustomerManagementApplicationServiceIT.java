@@ -1,6 +1,5 @@
-package com.algashop.ordering.application.service.customer.management;
+package com.algashop.ordering.application.customer.management;
 
-import com.algashop.ordering.application.customer.management.*;
 import com.algashop.ordering.application.customer.notification.CustomerNotificationApplicationService;
 import com.algashop.ordering.application.customer.query.CustomerOutput;
 import com.algashop.ordering.application.customer.query.CustomerQueryService;
