@@ -1,8 +1,12 @@
 package com.algashop.ordering.presentation;
 
+import com.algashop.ordering.application.commons.AddressData;
 import com.algashop.ordering.application.customer.management.CustomerInput;
 import com.algashop.ordering.application.customer.management.CustomerManagementApplicationService;
 import com.algashop.ordering.application.customer.query.*;
+import com.algashop.ordering.domain.model.DomainException;
+import com.algashop.ordering.domain.model.customer.CustomerEmailIsInUseException;
+import com.algashop.ordering.domain.model.customer.CustomerNotFoundException;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,39 +81,39 @@ class CustomerControllerContractTest {
 
         RestAssuredMockMvc
                 .given()
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
-                    .body(jsonInput)
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(jsonInput)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                    .post("/api/v1/customers")
+                .post("/api/v1/customers")
                 .then()
-                    .assertThat()
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .statusCode(HttpStatus.CREATED.value())
-                    .header("Location", Matchers.containsString("/api/v1/customers/" + customerId))
-                    .body(
-                            "id", Matchers.notNullValue(),
-                            "registeredAt", Matchers.notNullValue(),
-                            "firstName", Matchers.is("John"),
-                            "lastName", Matchers.is("Doe"),
-                            "email", Matchers.is("johndoe@email.com"),
-                            "document", Matchers.is("12345"),
-                            "phone", Matchers.is("11211244545"),
-                            "birthDate", Matchers.is("1991-07-05"),
-                            "promotionNotificationsAllowed", Matchers.is(false),
-                            "loyaltyPoints", Matchers.is(0),
-                            "address.street", Matchers.is("Bourbon Street"),
-                            "address.number", Matchers.is("2500"),
-                            "address.complement", Matchers.is("apt 201"),
-                            "address.neighborhood", Matchers.is("North Ville"),
-                            "address.city", Matchers.is("Yostfort"),
-                            "address.state", Matchers.is("South Carolina"),
-                            "address.zipCode", Matchers.is("13232")
-                    );
+                .assertThat()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .statusCode(HttpStatus.CREATED.value())
+                .header("Location", Matchers.containsString("/api/v1/customers/" + customerId))
+                .body(
+                        "id", Matchers.notNullValue(),
+                        "registeredAt", Matchers.notNullValue(),
+                        "firstName", Matchers.is("John"),
+                        "lastName", Matchers.is("Doe"),
+                        "email", Matchers.is("johndoe@email.com"),
+                        "document", Matchers.is("12345"),
+                        "phone", Matchers.is("11211244545"),
+                        "birthDate", Matchers.is("1991-07-05"),
+                        "promotionNotificationsAllowed", Matchers.is(false),
+                        "loyaltyPoints", Matchers.is(0),
+                        "address.street", Matchers.is("Bourbon Street"),
+                        "address.number", Matchers.is("2500"),
+                        "address.complement", Matchers.is("apt 201"),
+                        "address.neighborhood", Matchers.is("North Ville"),
+                        "address.city", Matchers.is("Yostfort"),
+                        "address.state", Matchers.is("South Carolina"),
+                        "address.zipCode", Matchers.is("13232")
+                );
     }
 
     @Test
-    public void createCustomerErrorContract() {
+    public void createCustomerError400Contract() {
 
         String jsonInput = """
                 {
@@ -133,15 +137,15 @@ class CustomerControllerContractTest {
                 """;
 
         RestAssuredMockMvc.given()
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .body(jsonInput)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(jsonInput)
                 .when()
-                    .post("/api/v1/customers")
+                .post("/api/v1/customers")
                 .then()
-                    .assertThat()
-                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body(
                         "status", Matchers.is(HttpStatus.BAD_REQUEST.value()),
                         "type", Matchers.is("/errors/invalid-fields"),
@@ -195,7 +199,6 @@ class CustomerControllerContractTest {
                         "content[0].registeredAt", Matchers.is(formatter.format(customer1.getRegisteredAt())),
 
 
-
                         "content[1].id", Matchers.equalTo(customer2.getId().toString()),
                         "content[1].firstName", Matchers.equalTo(customer2.getFirstName()),
                         "content[1].lastName", Matchers.equalTo(customer2.getLastName()),
@@ -209,6 +212,210 @@ class CustomerControllerContractTest {
                         "content[1].registeredAt", Matchers.is(formatter.format(customer2.getRegisteredAt()))
 
                 );
+
+    }
+
+    @Test
+    public void findByIdContract() {
+        CustomerOutput customer = CustomerOutputTestDataBuilder.existing().build();
+
+        Mockito.when(customerQueryService.findById(customer.getId())).thenReturn(customer);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+        AddressData address = customer.getAddress();
+
+        RestAssuredMockMvc
+                .given()
+                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                    .get("/api/v1/customers/{customers}", customer.getId())
+                .then()
+                    .assertThat()
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .statusCode(HttpStatus.OK.value())
+                    .body(
+                            "id", Matchers.equalTo(customer.getId().toString()),
+                            "firstName", Matchers.equalTo(customer.getFirstName()),
+                            "lastName", Matchers.is(customer.getLastName()),
+                            "email", Matchers.is(customer.getEmail()),
+                            "document", Matchers.is(customer.getDocument()),
+                            "phone", Matchers.is(customer.getPhone()),
+                            "birthDate", Matchers.is(customer.getBirthDate().toString()),
+                            "loyaltyPoints", Matchers.is(customer.getLoyaltyPoints()),
+                            "promotionNotificationsAllowed", Matchers.is(customer.getPromotionNotificationsAllowed()),
+                            "archived", Matchers.is(customer.getArchived()),
+                            "registeredAt", Matchers.is(formatter.format(customer.getRegisteredAt())),
+                            "address.street", Matchers.is(address.getStreet()),
+                            "address.number", Matchers.is(address.getNumber()),
+                            "address.complement", Matchers.is(address.getComplement()),
+                            "address.neighborhood", Matchers.is(address.getNeighborhood()),
+                            "address.city", Matchers.is(address.getCity()),
+                            "address.state", Matchers.is(address.getState()),
+                            "address.zipCode", Matchers.is(address.getZipCode())
+
+                    );
+    }
+
+    @Test
+    public void findByIdError404Contract() {
+        UUID invalidCustomerId = UUID.randomUUID();
+
+        Mockito.when(customerQueryService.findById(invalidCustomerId))
+                .thenThrow(CustomerNotFoundException.class);
+
+        RestAssuredMockMvc
+                .given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("/api/v1/customers/{customers}", invalidCustomerId)
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.NOT_FOUND.value()),
+                        "type", Matchers.is("/errors/not-found"),
+                        "title", Matchers.notNullValue(),
+                        "instance", Matchers.notNullValue()
+                );
+
+
+    }
+
+    @Test
+    public void createCustomerError409Contract() {
+        Mockito.when(customerManagementApplicationService.create(Mockito.any(CustomerInput.class)))
+                .thenThrow(CustomerEmailIsInUseException.class);
+
+        String jsonInput = """
+                {
+                  "firstName": "John",
+                  "lastName": "Doe",
+                  "email": "johndoe@email.com",
+                  "document": "12345",
+                  "phone": "11211244545",
+                  "birthDate": "1991-07-05",
+                  "promotionNotificationsAllowed": false,
+                  "address": {
+                    "street": "Bourbon Street",
+                    "number": "2500",
+                    "complement": "apt 201",
+                    "neighborhood": "North Ville",
+                    "city": "Yostfort",
+                    "state": "South Carolina",
+                    "zipCode": "13232"
+                  }
+                }
+                """;
+
+        RestAssuredMockMvc
+                .given()
+                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                    .body(jsonInput)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                    .post("/api/v1/customers")
+                .then()
+                    .assertThat()
+                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                    .statusCode(HttpStatus.CONFLICT.value())
+                    .body(
+                            "status", Matchers.is(HttpStatus.CONFLICT.value()),
+                            "type", Matchers.is("/errors/conflict"),
+                            "title", Matchers.notNullValue(),
+                            "instance", Matchers.notNullValue()
+                    );
+    }
+
+    @Test
+    public void createCustomerError422Contract() {
+        Mockito.when(customerManagementApplicationService.create(Mockito.any(CustomerInput.class)))
+                .thenThrow(DomainException.class);
+
+        String jsonInput = """
+                {
+                  "firstName": "John",
+                  "lastName": "Doe",
+                  "email": "johndoe@email.com",
+                  "document": "12345",
+                  "phone": "11211244545",
+                  "birthDate": "1991-07-05",
+                  "promotionNotificationsAllowed": false,
+                  "address": {
+                    "street": "Bourbon Street",
+                    "number": "2500",
+                    "complement": "apt 201",
+                    "neighborhood": "North Ville",
+                    "city": "Yostfort",
+                    "state": "South Carolina",
+                    "zipCode": "13232"
+                  }
+                }
+                """;
+
+        RestAssuredMockMvc
+                .given()
+                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                    .body(jsonInput)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                    .post("/api/v1/customers")
+                .then()
+                    .assertThat()
+                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                    .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                    .body(
+                            "status", Matchers.is(HttpStatus.UNPROCESSABLE_ENTITY.value()),
+                            "type", Matchers.is("/errors/unprocessable-entity"),
+                            "title", Matchers.notNullValue(),
+                            "instance", Matchers.notNullValue()
+                    );
+
+    }
+
+    @Test
+    public void createCustomerError500Contract() {
+        Mockito.when(customerManagementApplicationService.create(Mockito.any(CustomerInput.class)))
+                .thenThrow(RuntimeException.class);
+
+        String jsonInput = """
+                {
+                  "firstName": "John",
+                  "lastName": "Doe",
+                  "email": "johndoe@email.com",
+                  "document": "12345",
+                  "phone": "11211244545",
+                  "birthDate": "1991-07-05",
+                  "promotionNotificationsAllowed": false,
+                  "address": {
+                    "street": "Bourbon Street",
+                    "number": "2500",
+                    "complement": "apt 201",
+                    "neighborhood": "North Ville",
+                    "city": "Yostfort",
+                    "state": "South Carolina",
+                    "zipCode": "13232"
+                  }
+                }
+                """;
+
+        RestAssuredMockMvc
+                .given()
+                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                    .body(jsonInput)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                    .post("/api/v1/customers")
+                .then()
+                    .assertThat()
+                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .body(
+                            "status", Matchers.is(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+                            "type", Matchers.is("/errors/internal"),
+                            "title", Matchers.notNullValue(),
+                            "instance", Matchers.notNullValue()
+                    );
 
     }
 

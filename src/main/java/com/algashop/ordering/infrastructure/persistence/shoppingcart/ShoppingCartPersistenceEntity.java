@@ -23,7 +23,7 @@ import java.util.UUID;
 @ToString(of = "id")
 @Entity
 @Table(name = "shopping_cart")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
 public class ShoppingCartPersistenceEntity extends AbstractAggregateRoot<ShoppingCartPersistenceEntity> {
 
