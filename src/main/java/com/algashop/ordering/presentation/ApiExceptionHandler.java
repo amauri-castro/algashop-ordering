@@ -52,7 +52,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DomainEntityNotFoundException.class)
     public ProblemDetail handleDomainEntityNotFoundException(DomainEntityNotFoundException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-        problemDetail.setTitle("Not found");
+        problemDetail.setTitle("Not Found");
         problemDetail.setDetail(e.getMessage());
         problemDetail.setType(URI.create("/errors/not-found"));
         return problemDetail;

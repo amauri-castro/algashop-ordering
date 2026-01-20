@@ -2,11 +2,14 @@ package com.algashop.ordering.presentation;
 
 import com.algashop.ordering.application.commons.AddressData;
 import com.algashop.ordering.application.customer.management.CustomerInput;
+import com.algashop.ordering.application.customer.management.CustomerInputTestDataBuilder;
 import com.algashop.ordering.application.customer.management.CustomerManagementApplicationService;
+import com.algashop.ordering.application.customer.management.CustomerUpdateInput;
 import com.algashop.ordering.application.customer.query.*;
 import com.algashop.ordering.domain.model.DomainException;
 import com.algashop.ordering.domain.model.customer.CustomerEmailIsInUseException;
 import com.algashop.ordering.domain.model.customer.CustomerNotFoundException;
+import com.algashop.ordering.domain.model.customer.CustomerTestDataBuilder;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -226,34 +229,34 @@ class CustomerControllerContractTest {
 
         RestAssuredMockMvc
                 .given()
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                    .get("/api/v1/customers/{customers}", customer.getId())
+                .get("/api/v1/customers/{customers}", customer.getId())
                 .then()
-                    .assertThat()
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .statusCode(HttpStatus.OK.value())
-                    .body(
-                            "id", Matchers.equalTo(customer.getId().toString()),
-                            "firstName", Matchers.equalTo(customer.getFirstName()),
-                            "lastName", Matchers.is(customer.getLastName()),
-                            "email", Matchers.is(customer.getEmail()),
-                            "document", Matchers.is(customer.getDocument()),
-                            "phone", Matchers.is(customer.getPhone()),
-                            "birthDate", Matchers.is(customer.getBirthDate().toString()),
-                            "loyaltyPoints", Matchers.is(customer.getLoyaltyPoints()),
-                            "promotionNotificationsAllowed", Matchers.is(customer.getPromotionNotificationsAllowed()),
-                            "archived", Matchers.is(customer.getArchived()),
-                            "registeredAt", Matchers.is(formatter.format(customer.getRegisteredAt())),
-                            "address.street", Matchers.is(address.getStreet()),
-                            "address.number", Matchers.is(address.getNumber()),
-                            "address.complement", Matchers.is(address.getComplement()),
-                            "address.neighborhood", Matchers.is(address.getNeighborhood()),
-                            "address.city", Matchers.is(address.getCity()),
-                            "address.state", Matchers.is(address.getState()),
-                            "address.zipCode", Matchers.is(address.getZipCode())
+                .assertThat()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .statusCode(HttpStatus.OK.value())
+                .body(
+                        "id", Matchers.equalTo(customer.getId().toString()),
+                        "firstName", Matchers.equalTo(customer.getFirstName()),
+                        "lastName", Matchers.is(customer.getLastName()),
+                        "email", Matchers.is(customer.getEmail()),
+                        "document", Matchers.is(customer.getDocument()),
+                        "phone", Matchers.is(customer.getPhone()),
+                        "birthDate", Matchers.is(customer.getBirthDate().toString()),
+                        "loyaltyPoints", Matchers.is(customer.getLoyaltyPoints()),
+                        "promotionNotificationsAllowed", Matchers.is(customer.getPromotionNotificationsAllowed()),
+                        "archived", Matchers.is(customer.getArchived()),
+                        "registeredAt", Matchers.is(formatter.format(customer.getRegisteredAt())),
+                        "address.street", Matchers.is(address.getStreet()),
+                        "address.number", Matchers.is(address.getNumber()),
+                        "address.complement", Matchers.is(address.getComplement()),
+                        "address.neighborhood", Matchers.is(address.getNeighborhood()),
+                        "address.city", Matchers.is(address.getCity()),
+                        "address.state", Matchers.is(address.getState()),
+                        "address.zipCode", Matchers.is(address.getZipCode())
 
-                    );
+                );
     }
 
     @Test
@@ -310,21 +313,21 @@ class CustomerControllerContractTest {
 
         RestAssuredMockMvc
                 .given()
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
-                    .body(jsonInput)
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(jsonInput)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                    .post("/api/v1/customers")
+                .post("/api/v1/customers")
                 .then()
-                    .assertThat()
-                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                    .statusCode(HttpStatus.CONFLICT.value())
-                    .body(
-                            "status", Matchers.is(HttpStatus.CONFLICT.value()),
-                            "type", Matchers.is("/errors/conflict"),
-                            "title", Matchers.notNullValue(),
-                            "instance", Matchers.notNullValue()
-                    );
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.CONFLICT.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.CONFLICT.value()),
+                        "type", Matchers.is("/errors/conflict"),
+                        "title", Matchers.notNullValue(),
+                        "instance", Matchers.notNullValue()
+                );
     }
 
     @Test
@@ -355,21 +358,21 @@ class CustomerControllerContractTest {
 
         RestAssuredMockMvc
                 .given()
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
-                    .body(jsonInput)
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(jsonInput)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                    .post("/api/v1/customers")
+                .post("/api/v1/customers")
                 .then()
-                    .assertThat()
-                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                    .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                    .body(
-                            "status", Matchers.is(HttpStatus.UNPROCESSABLE_ENTITY.value()),
-                            "type", Matchers.is("/errors/unprocessable-entity"),
-                            "title", Matchers.notNullValue(),
-                            "instance", Matchers.notNullValue()
-                    );
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.UNPROCESSABLE_ENTITY.value()),
+                        "type", Matchers.is("/errors/unprocessable-entity"),
+                        "title", Matchers.notNullValue(),
+                        "instance", Matchers.notNullValue()
+                );
 
     }
 
@@ -401,22 +404,358 @@ class CustomerControllerContractTest {
 
         RestAssuredMockMvc
                 .given()
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
-                    .body(jsonInput)
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(jsonInput)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                    .post("/api/v1/customers")
+                .post("/api/v1/customers")
                 .then()
-                    .assertThat()
-                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .body(
-                            "status", Matchers.is(HttpStatus.INTERNAL_SERVER_ERROR.value()),
-                            "type", Matchers.is("/errors/internal"),
-                            "title", Matchers.notNullValue(),
-                            "instance", Matchers.notNullValue()
-                    );
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+                        "type", Matchers.is("/errors/internal"),
+                        "title", Matchers.notNullValue(),
+                        "instance", Matchers.notNullValue()
+                );
 
+    }
+
+    @Test
+    public void updateCustomerContract() {
+        CustomerOutput customer = CustomerOutputTestDataBuilder.existing().build();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+        AddressData address = customer.getAddress();
+
+        UUID customerId = UUID.randomUUID();
+        Mockito.when(customerQueryService.findById(Mockito.any(UUID.class)))
+                .thenReturn(customer);
+
+        String jsonInput = """
+                {
+                  "firstName": "John",
+                  "lastName": "Doe",
+                  "email": "johndoe@email.com",
+                  "document": "12345",
+                  "phone": "1191234564",
+                  "birthDate": "1991-07-05",
+                  "promotionNotificationsAllowed": false,
+                  "address": {
+                    "street": "Bourbon Street",
+                    "number": "2000",
+                    "complement": "apt 122",
+                    "neighborhood": "North Ville",
+                    "city": "Yostfort",
+                    "state": "South Carolina",
+                    "zipCode": "12321"
+                  }
+                }
+                """;
+
+        RestAssuredMockMvc
+                .given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(jsonInput)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .put("/api/v1/customers/{customerId}", customerId)
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .statusCode(HttpStatus.OK.value())
+                .body(
+                        "id", Matchers.equalTo(customer.getId().toString()),
+                        "firstName", Matchers.equalTo(customer.getFirstName()),
+                        "lastName", Matchers.is(customer.getLastName()),
+                        "email", Matchers.is(customer.getEmail()),
+                        "document", Matchers.is(customer.getDocument()),
+                        "phone", Matchers.is(customer.getPhone()),
+                        "birthDate", Matchers.is(customer.getBirthDate().toString()),
+                        "loyaltyPoints", Matchers.is(customer.getLoyaltyPoints()),
+                        "promotionNotificationsAllowed", Matchers.is(customer.getPromotionNotificationsAllowed()),
+                        "archived", Matchers.is(customer.getArchived()),
+                        "registeredAt", Matchers.is(formatter.format(customer.getRegisteredAt())),
+                        "address.street", Matchers.is(address.getStreet()),
+                        "address.number", Matchers.is(address.getNumber()),
+                        "address.complement", Matchers.is(address.getComplement()),
+                        "address.neighborhood", Matchers.is(address.getNeighborhood()),
+                        "address.city", Matchers.is(address.getCity()),
+                        "address.state", Matchers.is(address.getState()),
+                        "address.zipCode", Matchers.is(address.getZipCode())
+                );
+    }
+
+    @Test
+    public void updateCustomerError400Contract() {
+
+        String jsonInput = """
+                {
+                  "firstName": "John",
+                  "lastName": "Doe",
+                  "phone": "",
+                  "promotionNotificationsAllowed": false,
+                  "address": {
+                    "street": "Bourbon Street",
+                    "number": "2000",
+                    "complement": "apt 122",
+                    "neighborhood": "North Ville",
+                    "city": "Yostfort",
+                    "state": "South Carolina",
+                    "zipCode": "12321"
+                  }
+                }
+                """;
+
+        RestAssuredMockMvc
+                .given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(jsonInput)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .put("/api/v1/customers/{customerId}", UUID.randomUUID())
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.BAD_REQUEST.value()),
+                        "type", Matchers.is("/errors/invalid-fields"),
+                        "title", Matchers.notNullValue(),
+                        "instance", Matchers.notNullValue()
+                );
+    }
+
+    @Test
+    public void updateCustomerError404Contract() {
+
+        UUID invalidCustomerId = UUID.randomUUID();
+
+        Mockito.doThrow(CustomerNotFoundException.class)
+                .when(customerManagementApplicationService)
+                .update(Mockito.any(UUID.class), Mockito.any(CustomerUpdateInput.class));
+
+        String jsonInput = """
+                {
+                  "firstName": "John",
+                  "lastName": "Doe",
+                  "phone": "87989778787",
+                  "promotionNotificationsAllowed": false,
+                  "address": {
+                    "street": "Bourbon Street",
+                    "number": "2000",
+                    "complement": "apt 122",
+                    "neighborhood": "North Ville",
+                    "city": "Yostfort",
+                    "state": "South Carolina",
+                    "zipCode": "12321"
+                  }
+                }
+                """;
+
+        RestAssuredMockMvc
+                .given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(jsonInput)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .put("/api/v1/customers/{customerId}", invalidCustomerId)
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.NOT_FOUND.value()),
+                        "type", Matchers.is("/errors/not-found"),
+                        "title", Matchers.is(HttpStatus.NOT_FOUND.getReasonPhrase()),
+                        "instance", Matchers.notNullValue()
+                );
+
+        Mockito.verify(customerQueryService, Mockito.never())
+                .findById(Mockito.any());
+    }
+
+    @Test
+    public void updateCustomerError409Contract() {
+
+        Mockito.doThrow(CustomerEmailIsInUseException.class)
+                .when(customerManagementApplicationService)
+                .update(Mockito.any(UUID.class), Mockito.any(CustomerUpdateInput.class));
+
+        UUID customerId = UUID.randomUUID();
+        String jsonInput = """
+                {
+                  "firstName": "John",
+                  "lastName": "Doe",
+                  "phone": "87989778787",
+                  "email": "jonhdoe@email.com",
+                  "promotionNotificationsAllowed": false,
+                  "address": {
+                    "street": "Bourbon Street",
+                    "number": "2000",
+                    "complement": "apt 122",
+                    "neighborhood": "North Ville",
+                    "city": "Yostfort",
+                    "state": "South Carolina",
+                    "zipCode": "12321"
+                  }
+                }
+                """;
+
+        RestAssuredMockMvc
+                .given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(jsonInput)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .put("/api/v1/customers/{customerId}", customerId)
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.CONFLICT.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.CONFLICT.value()),
+                        "type", Matchers.is("/errors/conflict"),
+                        "title", Matchers.is(HttpStatus.CONFLICT.getReasonPhrase()),
+                        "instance", Matchers.notNullValue()
+                );
+    }
+
+    @Test
+    public void updateCustomerError422Contract() {
+
+        Mockito.doThrow(DomainException.class)
+                .when(customerManagementApplicationService)
+                .update(Mockito.any(UUID.class), Mockito.any(CustomerUpdateInput.class));
+
+        UUID customerId = UUID.randomUUID();
+        String jsonInput = """
+                {
+                  "firstName": "John",
+                  "lastName": "Doe",
+                  "phone": "87989778787",
+                  "email": "jonhdoe@email.com",
+                  "promotionNotificationsAllowed": false,
+                  "address": {
+                    "street": "Bourbon Street",
+                    "number": "2000",
+                    "complement": "apt 122",
+                    "neighborhood": "North Ville",
+                    "city": "Yostfort",
+                    "state": "South Carolina",
+                    "zipCode": "12321"
+                  }
+                }
+                """;
+
+        RestAssuredMockMvc
+                .given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(jsonInput)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .put("/api/v1/customers/{customerId}", customerId)
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.UNPROCESSABLE_ENTITY.value()),
+                        "type", Matchers.is("/errors/unprocessable-entity"),
+                        "title", Matchers.is(HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase()),
+                        "instance", Matchers.notNullValue()
+                );
+    }
+
+    @Test
+    public void deleteCustomerContract() {
+        Mockito.doNothing().when(customerManagementApplicationService)
+                .archive(Mockito.any(UUID.class));
+
+        UUID customerId = UUID.randomUUID();
+        RestAssuredMockMvc
+                .given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .delete("/api/v1/customers/{customerId}", customerId)
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    public void deleteCustomer404Contract() {
+        UUID invalidCustomerId = UUID.randomUUID();
+
+        Mockito.doThrow(CustomerNotFoundException.class)
+                .when(customerManagementApplicationService)
+                .archive(Mockito.any(UUID.class));
+
+        RestAssuredMockMvc
+                .given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .delete("/api/v1/customers/{customerId}", invalidCustomerId)
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.NOT_FOUND.value()),
+                        "type", Matchers.is("/errors/not-found"),
+                        "title", Matchers.is(HttpStatus.NOT_FOUND.getReasonPhrase()),
+                        "instance", Matchers.notNullValue()
+                );
+    }
+
+    @Test
+    public void deleteCustomer422Contract() {
+        UUID customerId = UUID.randomUUID();
+
+        Mockito.doThrow(DomainException.class)
+                .when(customerManagementApplicationService)
+                .archive(Mockito.any(UUID.class));
+
+        RestAssuredMockMvc
+                .given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .delete("/api/v1/customers/{customerId}", customerId)
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.UNPROCESSABLE_ENTITY.value()),
+                        "type", Matchers.is("/errors/unprocessable-entity"),
+                        "title", Matchers.is(HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase()),
+                        "instance", Matchers.notNullValue()
+                );
+    }
+
+    @Test
+    public void deleteCustomer500Contract() {
+        UUID customerId = UUID.randomUUID();
+
+        Mockito.doThrow(RuntimeException.class)
+                .when(customerManagementApplicationService)
+                .archive(Mockito.any(UUID.class));
+
+        RestAssuredMockMvc
+                .given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .delete("/api/v1/customers/{customerId}", customerId)
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .body(
+                        "status", Matchers.is(HttpStatus.INTERNAL_SERVER_ERROR.value()),
+                        "type", Matchers.is("/errors/internal"),
+                        "title", Matchers.is(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()),
+                        "instance", Matchers.notNullValue()
+                );
     }
 
 }
