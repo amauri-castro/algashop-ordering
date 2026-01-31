@@ -34,7 +34,7 @@ public class CustomerPersistenceEntityTestDataBuilder {
                         .neighborhood("Bronks")
                         .city("New York")
                         .state("New York")
-                        .zipCode("64545454")
+                        .zipCode("64545")
                         .build()
                 );
 

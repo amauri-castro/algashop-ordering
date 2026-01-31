@@ -1,5 +1,6 @@
-package com.algashop.ordering.application.shoppingcart.query;
+package com.algashop.ordering.presentation.shoppingcart;
 
+import com.algashop.ordering.application.shoppingcart.query.ShoppingCartItemOutput;
 import lombok.Data;
 
 import java.util.ArrayList;

@@ -1,15 +1,13 @@
-package com.algashop.ordering.presentation;
+package com.algashop.ordering.presentation.customer;
 
 import com.algashop.ordering.application.commons.AddressData;
 import com.algashop.ordering.application.customer.management.CustomerInput;
-import com.algashop.ordering.application.customer.management.CustomerInputTestDataBuilder;
 import com.algashop.ordering.application.customer.management.CustomerManagementApplicationService;
 import com.algashop.ordering.application.customer.management.CustomerUpdateInput;
 import com.algashop.ordering.application.customer.query.*;
 import com.algashop.ordering.domain.model.DomainException;
 import com.algashop.ordering.domain.model.customer.CustomerEmailIsInUseException;
 import com.algashop.ordering.domain.model.customer.CustomerNotFoundException;
-import com.algashop.ordering.domain.model.customer.CustomerTestDataBuilder;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
