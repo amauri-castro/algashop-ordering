@@ -23,18 +23,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.UUID;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class OrderControllerIT {
 
     @LocalServerPort
     private int port;
 
-    private static boolean databaseInitialized;
 
     private static final UUID validCustomerId = UUID.fromString("6e148bd5-47f6-4022-b9da-07cfaa294f7a");
     private static final UUID validProductId = UUID.fromString("019be330-5c35-7ef8-b59b-0cf73765a296");
@@ -84,14 +85,9 @@ public class OrderControllerIT {
     }
 
     private void initDatabase() {
-        if (databaseInitialized) {
-            return;
-        }
         customerRepository.saveAndFlush(
                 CustomerPersistenceEntityTestDataBuilder.aCustomer().id(validCustomerId).build()
         );
-
-        databaseInitialized = true;
     }
 
     @Test
