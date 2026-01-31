@@ -1,0 +1,21 @@
+{
+  "id" : "d88f96ef-aab2-4ac3-932f-f474afbdd8e0",
+  "request" : {
+    "url" : "/api/v1/products/019be330-5c35-7ef8-b59b-0cf73765a296",
+    "method" : "GET",
+    "headers" : {
+      "Accept" : {
+        "matches" : "application/json.*"
+      }
+    }
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"id\":\"{{{request.path.[3]}}}\",\"addedAt\":\"2016-06-16T12:23:34.123Z\",\"name\":\"Notebook Legion\",\"brand\":\"Lenovo\",\"regularPrice\":1500.00,\"salePrice\":1000.00,\"inStock\":true,\"enabled\":true,\"category\":{\"id\":\"6090bf71-68f7-446f-8a45-77344db66ea4\",\"name\":\"Notebook\"},\"description\":\"A Gamer Notebook\"}",
+    "headers" : {
+      "Content-Type" : "application/json"
+    },
+    "transformers" : [ "response-template", "spring-cloud-contract" ]
+  },
+  "uuid" : "d88f96ef-aab2-4ac3-932f-f474afbdd8e0"
+}

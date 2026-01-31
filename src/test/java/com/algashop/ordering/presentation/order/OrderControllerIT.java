@@ -5,11 +5,14 @@ import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersist
 import com.algashop.ordering.infrastructure.persistence.entity.CustomerPersistenceEntityTestDataBuilder;
 import com.algashop.ordering.infrastructure.persistence.order.OrderPersistenceEntityRepository;
 import com.algashop.ordering.utils.AlgaShopResourceUtils;
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
 import io.restassured.RestAssured;
 import io.restassured.config.JsonConfig;
 import io.restassured.path.json.config.JsonPathConfig;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,8 @@ import org.springframework.http.MediaType;
 
 import java.util.UUID;
 
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class OrderControllerIT {
 
@@ -29,6 +34,10 @@ public class OrderControllerIT {
     private static boolean databaseInitialized;
 
     private static final UUID validCustomerId = UUID.fromString("6e148bd5-47f6-4022-b9da-07cfaa294f7a");
+
+    private WireMockServer wireMockProductCatalog;
+    private WireMockServer wireMockRapidex;
+
 
     @Autowired
     private CustomerPersistenceEntityRepository customerRepository;
@@ -45,6 +54,28 @@ public class OrderControllerIT {
         RestAssured.config().jsonConfig(jsonConfig);
 
         initDatabase();
+
+        wireMockRapidex = new WireMockServer(options()
+                .port(8780)
+                .usingFilesUnderDirectory("src/test/resources/wiremock/rapidex")
+                .extensions(new ResponseTemplateTransformer(true))
+        );
+
+        wireMockProductCatalog = new WireMockServer(options()
+                .port(8781)
+                .usingFilesUnderDirectory("src/test/resources/wiremock/product-catalog")
+                .extensions(new ResponseTemplateTransformer(true))
+        );
+
+        wireMockRapidex.start();
+        wireMockProductCatalog.start();
+
+    }
+
+    @AfterEach
+    public void after() {
+        wireMockRapidex.stop();
+        wireMockProductCatalog.stop();
     }
 
     private void initDatabase() {
