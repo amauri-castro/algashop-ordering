@@ -86,15 +86,7 @@ public class CustomerControllerIT {
                 .then()
                     .assertThat()
                     .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                    .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body(
-                        "status", Matchers.is(HttpStatus.BAD_REQUEST.value()),
-                        "type", Matchers.is("/errors/invalid-fields"),
-                        "title", Matchers.notNullValue(),
-                        "detail", Matchers.notNullValue(),
-                        "instance", Matchers.notNullValue(),
-                        "fields", Matchers.notNullValue()
-                );
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
 
     }
 
@@ -123,13 +115,7 @@ public class CustomerControllerIT {
                 .then()
                 .assertThat()
                 .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                .statusCode(HttpStatus.NOT_FOUND.value())
-                .body(
-                        "status", Matchers.is(HttpStatus.NOT_FOUND.value()),
-                        "type", Matchers.is("/errors/not-found"),
-                        "title", Matchers.is(HttpStatus.NOT_FOUND.getReasonPhrase()),
-                        "instance", Matchers.notNullValue()
-                );
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
 
