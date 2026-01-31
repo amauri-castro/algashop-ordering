@@ -1,0 +1,39 @@
+{
+  "customerId": "6e148bd5-47f6-4022-b9da-07cfaa294f7a",
+  "productId": "019c13f1-190d-7b56-a729-4d31b38d4922",
+  "quantity": 12,
+  "paymentMethod": "GATEWAY_BALANCE",
+  "shipping": {
+    "recipient": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "document": "12345",
+      "phone": "5511912341234"
+    },
+    "address": {
+      "street": "Bourbon Street",
+      "number": "2500",
+      "complement": "apt 201",
+      "neighborhood": "North Ville",
+      "city": "Yostfort",
+      "state": "South Carolina",
+      "zipCode": "13232"
+    }
+  },
+  "billing": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "document": "12345",
+    "phone": "5511912341234",
+    "email": "johndoe@email.com",
+    "address": {
+      "street": "Bourbon Street",
+      "number": "2500",
+      "complement": "apt 201",
+      "neighborhood": "North Ville",
+      "city": "Yostfort",
+      "state": "South Carolina",
+      "zipCode": "13232"
+    }
+  }
+}
