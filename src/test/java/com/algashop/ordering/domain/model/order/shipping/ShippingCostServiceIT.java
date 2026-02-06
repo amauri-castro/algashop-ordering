@@ -8,11 +8,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ShippingCostServiceIT {
 
 
@@ -28,7 +30,7 @@ class ShippingCostServiceIT {
     @BeforeEach
     public void setup() {
         wireMockRapidex = new WireMockServer(options()
-                .port(8780)
+                .port(8880)
                 .usingFilesUnderDirectory("src/test/resources/wiremock/rapidex")
                 .extensions(new ResponseTemplateTransformer(true))
         );

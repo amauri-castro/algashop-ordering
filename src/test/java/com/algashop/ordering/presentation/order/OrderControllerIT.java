@@ -68,7 +68,7 @@ public class OrderControllerIT {
         initDatabase();
 
         wireMockRapidex = new WireMockServer(options()
-                .port(8780)
+                .port(8782)
                 .usingFilesUnderDirectory("src/test/resources/wiremock/rapidex")
                 .extensions(new ResponseTemplateTransformer(true))
         );
