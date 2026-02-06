@@ -43,7 +43,7 @@ public class OrderControllerIT {
 
     private static final UUID validCustomerId = UUID.fromString("6e148bd5-47f6-4022-b9da-07cfaa294f7a");
     private static final UUID validProductId = UUID.fromString("019be330-5c35-7ef8-b59b-0cf73765a296");
-    private static final UUID validShoppingCartId = UUID.fromString("019c15b7-ba01-71dc-a6bc-5525ccff5475");
+    private static final UUID validShoppingCartId = UUID.fromString("4f31582a-66e6-4601-a9d3-ff608c2d4461");
 
 
     private WireMockServer wireMockProductCatalog;
@@ -201,13 +201,6 @@ public class OrderControllerIT {
 
     @Test
     public void shouldCreateOrderUsingShoppingCart() {
-
-        var shoppingCartPersistence = ShoppingCartPersistenceEntityTestDataBuilder.existingShoppingCart()
-                .id(validShoppingCartId)
-                .customer(customerRepository.getReferenceById(validCustomerId))
-                .build();
-
-        shoppingCartPersistenceEntityRepository.save(shoppingCartPersistence);
 
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-shoppingcart.json");
 
