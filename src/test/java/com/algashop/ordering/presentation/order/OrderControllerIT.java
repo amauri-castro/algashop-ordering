@@ -33,7 +33,8 @@ import java.util.UUID;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(scripts = "classpath:db/clean/afterMigrate.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(scripts = "classpath:db/testdata/afterMigrate.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@Sql(scripts = "classpath:db/clean/afterMigrate.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 public class OrderControllerIT {
 
     @LocalServerPort
@@ -66,8 +67,6 @@ public class OrderControllerIT {
         JsonConfig jsonConfig = JsonConfig.jsonConfig().numberReturnType(JsonPathConfig.NumberReturnType.BIG_DECIMAL);
         RestAssured.config().jsonConfig(jsonConfig);
 
-        initDatabase();
-
         wireMockRapidex = new WireMockServer(options()
                 .port(8782)
                 .usingFilesUnderDirectory("src/test/resources/wiremock/rapidex")
@@ -91,11 +90,6 @@ public class OrderControllerIT {
         wireMockProductCatalog.stop();
     }
 
-    private void initDatabase() {
-        customerRepository.saveAndFlush(
-                CustomerPersistenceEntityTestDataBuilder.aCustomer().id(validCustomerId).build()
-        );
-    }
 
     @Test
     public void shouldCreateOrderUsingProduct() {
