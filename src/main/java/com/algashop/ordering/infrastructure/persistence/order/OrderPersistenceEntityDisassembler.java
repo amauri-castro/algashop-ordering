@@ -33,14 +33,16 @@ public class OrderPersistenceEntityDisassembler {
                 .paidAt(persistenceEntity.getPaidAt())
                 .canceledAt(persistenceEntity.getCanceledAt())
                 .readyAt(persistenceEntity.getReadyAt())
+                .billing(toBillingValueObject(persistenceEntity.getBilling()))
+                .shipping(toShippingValueObject(persistenceEntity.getShipping()))
                 .items(new HashSet<>())
                 .version(persistenceEntity.getVersion())
-                .items(toOrderItemSet(persistenceEntity.getItems()))
+                .items(toDomaintEntity(persistenceEntity.getItems()))
                 .creditCardId(creditCardId)
                 .build();
     }
 
-    private Set<OrderItem> toOrderItemSet(Set<OrderItemPersistenceEntity> orderItemPersistenceEntities) {
+    private Set<OrderItem> toDomaintEntity(Set<OrderItemPersistenceEntity> orderItemPersistenceEntities) {
         return orderItemPersistenceEntities.stream()
                 .map(orderItem -> OrderItem.existing()
                         .id(new OrderItemId(orderItem.getId()))
@@ -62,6 +64,7 @@ public class OrderPersistenceEntityDisassembler {
                 .fullName(new FullName(billingEmbeddable.getFirstName(), billingEmbeddable.getLastName()))
                 .document(new Document(billingEmbeddable.getDocument()))
                 .phone(new Phone(billingEmbeddable.getPhone()))
+                .email(new Email(billingEmbeddable.getEmail()))
                 .address(toAddressValueObject(billingEmbeddable.getAddress()))
                 .build();
     }
