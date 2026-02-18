@@ -37,6 +37,8 @@ public class Order
     private OrderStatus status;
     private PaymentMethod paymentMethod;
 
+    private CreditCardId creditCardId;
+
     private Set<OrderItem> items;
 
     private Long version;
@@ -45,7 +47,7 @@ public class Order
     public Order(OrderId id, Long version, CustomerId customerId, Money totalAmount, Quantity totalItems,
                  OffsetDateTime placedAt, OffsetDateTime paidAt, OffsetDateTime canceledAt,
                  OffsetDateTime readyAt, Billing billing, Shipping shipping,
-                 OrderStatus status, PaymentMethod paymentMethod, Set<OrderItem> items) {
+                 OrderStatus status, PaymentMethod paymentMethod, CreditCardId creditCardId, Set<OrderItem> items) {
         this.setId(id);
         this.setVersion(version);
         this.setCustomerId(customerId);
@@ -59,6 +61,7 @@ public class Order
         this.setShipping(shipping);
         this.setStatus(status);
         this.setPaymentMethod(paymentMethod);
+        this.setCreditCardId(creditCardId);
         this.setItems(items);
     }
 
@@ -76,6 +79,7 @@ public class Order
                 null,
                 null,
                 OrderStatus.DRAFT,
+                null,
                 null,
                 new HashSet<>()
         );
@@ -142,8 +146,12 @@ public class Order
                 ));
     }
 
-    public void changePaymentMethod(PaymentMethod paymentMethod) {
+    public void changePaymentMethod(PaymentMethod paymentMethod, CreditCardId creditCardId) {
         Objects.requireNonNull(paymentMethod);
+        if (paymentMethod.equals(PaymentMethod.CREDIT_CARD)) {
+            Objects.requireNonNull(creditCardId);
+            this.setCreditCardId(creditCardId);
+        }
         verifyIfChangeable();
         this.setPaymentMethod(paymentMethod);
     }
@@ -264,6 +272,10 @@ public class Order
 
     public PaymentMethod paymentMethod() {
         return paymentMethod;
+    }
+
+    public CreditCardId creditCardId() {
+        return creditCardId;
     }
 
     public Set<OrderItem> items() {
@@ -389,6 +401,10 @@ public class Order
 
     private void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    private void setCreditCardId(CreditCardId creditCardId) {
+        this.creditCardId = creditCardId;
     }
 
     private void setItems(Set<OrderItem> items) {

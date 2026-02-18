@@ -51,7 +51,8 @@ class BuyNowServiceTest {
         Quantity quantity = new Quantity(3);
         PaymentMethod paymentMethod = PaymentMethod.CREDIT_CARD;
 
-        Order order = buyNowService.buyNow(product, customer, billingInfo, shippingInfo, quantity, paymentMethod);
+        Order order = buyNowService.buyNow(product, customer, billingInfo,
+                shippingInfo, quantity, paymentMethod, new CreditCardId());
 
         assertThat(order).isNotNull();
         assertThat(order.id()).isNotNull();
@@ -81,7 +82,8 @@ class BuyNowServiceTest {
         PaymentMethod paymentMethod = PaymentMethod.CREDIT_CARD;
 
         assertThatExceptionOfType(ProductOutOfStockException.class)
-                .isThrownBy(() -> buyNowService.buyNow(product, customer, billingInfo, shippingInfo, quantity, paymentMethod));
+                .isThrownBy(() -> buyNowService.buyNow(product, customer, billingInfo, shippingInfo,
+                        quantity, paymentMethod, new CreditCardId()));
     }
 
     @Test
@@ -94,7 +96,8 @@ class BuyNowServiceTest {
         PaymentMethod paymentMethod = PaymentMethod.CREDIT_CARD;
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> buyNowService.buyNow(product, customer, billingInfo, shippingInfo, quantity, paymentMethod));
+                .isThrownBy(() -> buyNowService.buyNow(product, customer, billingInfo, shippingInfo,
+                        quantity, paymentMethod, new CreditCardId()));
     }
 
     @Test
@@ -112,7 +115,8 @@ class BuyNowServiceTest {
         Quantity quantity = new Quantity(3);
         PaymentMethod paymentMethod = PaymentMethod.CREDIT_CARD;
 
-        Order order = buyNowService.buyNow(product, customer, billingInfo, shippingInfo, quantity, paymentMethod);
+        Order order = buyNowService.buyNow(product, customer, billingInfo, shippingInfo,
+                quantity, paymentMethod, new CreditCardId());
 
         assertThat(order).isNotNull();
         assertThat(order.id()).isNotNull();

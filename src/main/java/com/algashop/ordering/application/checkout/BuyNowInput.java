@@ -32,4 +32,6 @@ public class BuyNowInput {
     private Integer quantity;
     @NotBlank
     private String paymentMethod;
+
+    private UUID creditCardId;
 }
