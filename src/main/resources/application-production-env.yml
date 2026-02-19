@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${DATA_SOURCE_JDBC_URL}
+    username: ${DATA_SOURCE_USERNAME}
+    password: ${DATA_SOURCE_PASSWORD}
+  jpa:
+    show-sql: true
+  flyway:
+    enabled: false
+    locations: classpath:db/migration
+    user: ${FLYWAY_USERNAME}
+    password: ${FLYWAY_PASSWORD}
+    url: ${DATA_SOURCE_JDBC_URL}
+
+algashop:
+  integrations:
+    shipping.provider: RAPIDEX
+    rapidex.url: ${RAPIDEX_URL}
+    product-catalog.url: ${PRODUCT_CATALOG_URL}
+
