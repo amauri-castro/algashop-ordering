@@ -4,7 +4,7 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration,classpath:db/testdata
-    url: jdbc:postgresql://localhost:5432/ordering
+    url: jdbc:postgresql://algashop-postgres:5432/ordering
 
 algashop:
   integrations:
