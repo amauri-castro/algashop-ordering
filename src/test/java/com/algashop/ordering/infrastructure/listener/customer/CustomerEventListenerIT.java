@@ -1,5 +1,6 @@
 package com.algashop.ordering.infrastructure.listener.customer;
 
+import com.algashop.ordering.application.AbstractApplicationIT;
 import com.algashop.ordering.application.customer.loyaltypoints.CustomerLoyaltyPointsApplicationService;
 import com.algashop.ordering.application.customer.notification.CustomerNotificationApplicationService;
 import com.algashop.ordering.domain.model.commons.Email;
@@ -20,7 +21,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @SpringBootTest
-class CustomerEventListenerIT {
+class CustomerEventListenerIT extends AbstractApplicationIT {
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;

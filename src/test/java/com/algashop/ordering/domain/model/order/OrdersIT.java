@@ -1,5 +1,6 @@
 package com.algashop.ordering.domain.model.order;
 
+import com.algashop.ordering.domain.model.AbstractDomainIT;
 import com.algashop.ordering.domain.model.customer.CustomerId;
 import com.algashop.ordering.domain.model.customer.CustomerTestDataBuilder;
 import com.algashop.ordering.domain.model.customer.Customers;
@@ -25,17 +26,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@Import({
-        OrdersPersistenceProvider.class,
-        OrderPersistenceEntityAssembler.class,
-        OrderPersistenceEntityDisassembler.class,
-        CustomersPersistenceProvider.class,
-        CustomerPersistenceEntityAssembler.class,
-        CustomerPersistenceEntityDisassembler.class
-})
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class OrdersIT {
+
+class OrdersIT extends AbstractDomainIT {
 
     private Orders orders;
     private Customers customers;

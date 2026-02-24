@@ -3,6 +3,7 @@ package com.algashop.ordering.infrastructure.persistence.provider;
 import com.algashop.ordering.domain.model.customer.Customer;
 import com.algashop.ordering.domain.model.customer.CustomerTestDataBuilder;
 import com.algashop.ordering.domain.model.commons.Email;
+import com.algashop.ordering.infrastructure.persistence.AbstractPersistenceIT;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.SpringDataAuditingConfig;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityDisassembler;
@@ -18,14 +19,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@DataJpaTest
 @Import({CustomersPersistenceProvider.class,
         CustomerPersistenceEntityAssembler.class,
-        CustomerPersistenceEntityDisassembler.class,
-        SpringDataAuditingConfig.class}
+        CustomerPersistenceEntityDisassembler.class}
 )
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CustomersPersistenceProviderIT {
+public class CustomersPersistenceProviderIT extends AbstractPersistenceIT {
 
     private CustomersPersistenceProvider persistenceProvider;
     private CustomerPersistenceEntityRepository entityRepository;

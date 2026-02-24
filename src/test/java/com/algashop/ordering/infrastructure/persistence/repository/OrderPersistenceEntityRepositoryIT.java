@@ -1,27 +1,22 @@
 package com.algashop.ordering.infrastructure.persistence.repository;
 
 import com.algashop.ordering.domain.model.customer.CustomerTestDataBuilder;
-import com.algashop.ordering.infrastructure.persistence.SpringDataAuditingConfig;
-import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
+import com.algashop.ordering.infrastructure.persistence.AbstractPersistenceIT;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntity;
+import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.persistence.entity.CustomerPersistenceEntityTestDataBuilder;
-import com.algashop.ordering.infrastructure.persistence.order.OrderPersistenceEntity;
 import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntityTestDataBuilder;
+import com.algashop.ordering.infrastructure.persistence.order.OrderPersistenceEntity;
 import com.algashop.ordering.infrastructure.persistence.order.OrderPersistenceEntityRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 
 import java.util.UUID;
 
-@DataJpaTest
-@Import(SpringDataAuditingConfig.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class OrderPersistenceEntityRepositoryIT {
+
+class OrderPersistenceEntityRepositoryIT extends AbstractPersistenceIT {
 
     private final OrderPersistenceEntityRepository orderPersistenceEntityRepository;
     private final CustomerPersistenceEntityRepository customerPersistenceEntityRepository;

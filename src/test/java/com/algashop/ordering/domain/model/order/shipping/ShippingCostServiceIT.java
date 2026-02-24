@@ -1,5 +1,6 @@
 package com.algashop.ordering.domain.model.order.shipping;
 
+import com.algashop.ordering.domain.model.AbstractDomainIT;
 import com.algashop.ordering.domain.model.commons.ZipCode;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
@@ -8,14 +9,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
-@SpringBootTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class ShippingCostServiceIT {
+
+class ShippingCostServiceIT extends AbstractDomainIT {
 
 
     @Autowired

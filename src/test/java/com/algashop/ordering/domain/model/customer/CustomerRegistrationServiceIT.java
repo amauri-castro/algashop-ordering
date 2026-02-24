@@ -1,5 +1,6 @@
 package com.algashop.ordering.domain.model.customer;
 
+import com.algashop.ordering.domain.model.AbstractDomainIT;
 import com.algashop.ordering.domain.model.commons.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
-@SpringBootTest
-class CustomerRegistrationServiceIT {
+
+class CustomerRegistrationServiceIT extends AbstractDomainIT {
 
     @Autowired
     private CustomerRegistrationService customerRegistrationService;

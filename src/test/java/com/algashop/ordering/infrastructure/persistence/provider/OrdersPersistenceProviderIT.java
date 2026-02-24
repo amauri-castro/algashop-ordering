@@ -3,7 +3,7 @@ package com.algashop.ordering.infrastructure.persistence.provider;
 import com.algashop.ordering.domain.model.order.Order;
 import com.algashop.ordering.domain.model.order.OrderStatus;
 import com.algashop.ordering.domain.model.order.OrderTestDataBuilder;
-import com.algashop.ordering.infrastructure.persistence.SpringDataAuditingConfig;
+import com.algashop.ordering.infrastructure.persistence.AbstractPersistenceIT;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityDisassembler;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomersPersistenceProvider;
@@ -14,26 +14,21 @@ import com.algashop.ordering.infrastructure.persistence.order.OrdersPersistenceP
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@DataJpaTest
 @Import({
         OrdersPersistenceProvider.class,
         OrderPersistenceEntityAssembler.class,
         OrderPersistenceEntityDisassembler.class,
         CustomersPersistenceProvider.class,
         CustomerPersistenceEntityAssembler.class,
-        CustomerPersistenceEntityDisassembler.class,
-        SpringDataAuditingConfig.class
+        CustomerPersistenceEntityDisassembler.class
 })
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(properties = "spring.flyway.locations=classpath:db/migration,classpath:db/testdata")
-class OrdersPersistenceProviderIT {
+class OrdersPersistenceProviderIT extends AbstractPersistenceIT {
 
     private OrdersPersistenceProvider persistenceProvider;
     private OrderPersistenceEntityRepository entityRepository;

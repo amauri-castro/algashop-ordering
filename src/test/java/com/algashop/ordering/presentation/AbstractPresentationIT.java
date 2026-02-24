@@ -17,7 +17,7 @@ import static io.restassured.config.JsonConfig.jsonConfig;
 @Sql(scripts = "classpath:db/testdata/afterMigrate.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Sql(scripts = "classpath:db/clean/afterMigrate.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 @Import(TestcontainerPostgreSQLConfig.class)
-public class AbstractPresentationIT {
+public abstract class AbstractPresentationIT {
 
     @LocalServerPort
     protected int port;
