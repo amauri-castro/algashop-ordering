@@ -30,8 +30,6 @@ public class ShoppingCartControllerIT extends AbstractPresentationIT {
     private static final UUID invalidShoppingCartId = UUID.fromString("019c15ac-6e05-735d-a489-c93bacd73c33");
     private static final UUID validShoppingCartId = UUID.fromString("4f31582a-66e6-4601-a9d3-ff608c2d4461");
 
-
-
     @BeforeEach
     public void setup() {
         super.beforeEach();
