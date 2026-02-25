@@ -1,9 +1,9 @@
 package com.algashop.ordering.presentation.shoppingcart;
 
-import com.algashop.ordering.core.application.shoppingcart.management.ShoppingCartItemInput;
-import com.algashop.ordering.core.application.shoppingcart.management.ShoppingCartManagementApplicationService;
-import com.algashop.ordering.core.application.shoppingcart.query.ShoppingCartOutput;
-import com.algashop.ordering.core.application.shoppingcart.query.ShoppingCartQueryService;
+import com.algashop.ordering.core.ports.in.shoppingcart.ShoppingCartItemInput;
+import com.algashop.ordering.core.application.shoppingcart.ShoppingCartManagementApplicationService;
+import com.algashop.ordering.core.ports.in.shoppingcart.ShoppingCartOutput;
+import com.algashop.ordering.core.ports.in.shoppingcart.ForQueryingShoppingCarts;
 import com.algashop.ordering.core.domain.model.customer.CustomerNotFoundException;
 import com.algashop.ordering.core.domain.model.product.ProductNotFoundException;
 import com.algashop.ordering.presentation.UnprocessableEntityException;
@@ -20,7 +20,7 @@ import java.util.UUID;
 public class ShoppingCartController {
 
     private final ShoppingCartManagementApplicationService shoppingCartManagementApplicationService;
-    private final ShoppingCartQueryService shoppingCartQueryService;
+    private final ForQueryingShoppingCarts shoppingCartQueryService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

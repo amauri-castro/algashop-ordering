@@ -6,6 +6,8 @@ import com.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;
 import com.algashop.ordering.core.domain.model.customer.Customers;
 import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCart;
 import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCarts;
+import com.algashop.ordering.core.ports.in.shoppingcart.ForQueryingShoppingCarts;
+import com.algashop.ordering.core.ports.in.shoppingcart.ShoppingCartOutput;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class ShoppingCartQueryServiceIT extends AbstractApplicationIT {
 
     @Autowired
-    private ShoppingCartQueryService queryService;
+    private ForQueryingShoppingCarts queryService;
 
     @Autowired
     private ShoppingCarts shoppingCarts;
