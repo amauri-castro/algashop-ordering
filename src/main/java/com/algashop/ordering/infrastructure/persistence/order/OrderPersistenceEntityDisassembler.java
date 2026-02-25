@@ -1,12 +1,10 @@
 package com.algashop.ordering.infrastructure.persistence.order;
 
-import com.algashop.ordering.domain.model.commons.*;
-import com.algashop.ordering.domain.model.order.*;
-import com.algashop.ordering.domain.model.product.ProductName;
-import com.algashop.ordering.domain.model.customer.CustomerId;
-import com.algashop.ordering.domain.model.order.OrderId;
-import com.algashop.ordering.domain.model.order.OrderItemId;
-import com.algashop.ordering.domain.model.product.ProductId;
+import com.algashop.ordering.core.domain.model.commons.*;
+import com.algashop.ordering.core.domain.model.order.*;
+import com.algashop.ordering.core.domain.model.product.ProductName;
+import com.algashop.ordering.core.domain.model.customer.CustomerId;
+import com.algashop.ordering.core.domain.model.product.ProductId;
 import com.algashop.ordering.infrastructure.persistence.commons.AddressEmbeddable;
 import org.springframework.stereotype.Component;
 

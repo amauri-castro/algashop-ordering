@@ -1,0 +1,11 @@
+package com.algashop.ordering.core.domain.model.shoppingcart;
+
+import com.algashop.ordering.core.domain.model.commons.Money;
+import com.algashop.ordering.core.domain.model.product.ProductId;
+
+public interface ShoppingCartProductAdjustmentService {
+
+    void adjustPrice(ProductId productId, Money updatePrice);
+
+    void changeAvailability(ProductId productId, boolean available);
+}

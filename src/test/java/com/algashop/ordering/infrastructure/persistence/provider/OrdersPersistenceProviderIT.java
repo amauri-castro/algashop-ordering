@@ -1,8 +1,8 @@
 package com.algashop.ordering.infrastructure.persistence.provider;
 
-import com.algashop.ordering.domain.model.order.Order;
-import com.algashop.ordering.domain.model.order.OrderStatus;
-import com.algashop.ordering.domain.model.order.OrderTestDataBuilder;
+import com.algashop.ordering.core.domain.model.order.Order;
+import com.algashop.ordering.core.domain.model.order.OrderStatus;
+import com.algashop.ordering.core.domain.model.order.OrderTestDataBuilder;
 import com.algashop.ordering.infrastructure.persistence.AbstractPersistenceIT;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityDisassembler;

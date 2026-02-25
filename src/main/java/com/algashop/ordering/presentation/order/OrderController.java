@@ -1,16 +1,16 @@
 package com.algashop.ordering.presentation.order;
 
-import com.algashop.ordering.application.checkout.BuyNowApplicationService;
-import com.algashop.ordering.application.checkout.BuyNowInput;
-import com.algashop.ordering.application.checkout.CheckoutApplicationService;
-import com.algashop.ordering.application.checkout.CheckoutInput;
-import com.algashop.ordering.application.order.query.OrderDetailOutput;
-import com.algashop.ordering.application.order.query.OrderFilter;
-import com.algashop.ordering.application.order.query.OrderQueryService;
-import com.algashop.ordering.application.order.query.OrderSummaryOutput;
-import com.algashop.ordering.domain.model.customer.CustomerNotFoundException;
-import com.algashop.ordering.domain.model.product.ProductNotFoundException;
-import com.algashop.ordering.domain.model.shoppingcart.ShoppingCartNotFoundException;
+import com.algashop.ordering.core.application.checkout.BuyNowApplicationService;
+import com.algashop.ordering.core.application.checkout.BuyNowInput;
+import com.algashop.ordering.core.application.checkout.CheckoutApplicationService;
+import com.algashop.ordering.core.application.checkout.CheckoutInput;
+import com.algashop.ordering.core.application.order.query.OrderDetailOutput;
+import com.algashop.ordering.core.application.order.query.OrderFilter;
+import com.algashop.ordering.core.application.order.query.OrderQueryService;
+import com.algashop.ordering.core.application.order.query.OrderSummaryOutput;
+import com.algashop.ordering.core.domain.model.customer.CustomerNotFoundException;
+import com.algashop.ordering.core.domain.model.product.ProductNotFoundException;
+import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartNotFoundException;
 import com.algashop.ordering.presentation.PageModel;
 import com.algashop.ordering.presentation.UnprocessableEntityException;
 import jakarta.validation.Valid;

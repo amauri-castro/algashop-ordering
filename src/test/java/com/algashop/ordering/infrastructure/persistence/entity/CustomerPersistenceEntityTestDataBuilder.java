@@ -6,7 +6,7 @@ import com.algashop.ordering.infrastructure.persistence.commons.AddressEmbeddabl
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
-import static com.algashop.ordering.domain.model.customer.CustomerTestDataBuilder.DEFAULT_CUSTOMER_ID;
+import static com.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder.DEFAULT_CUSTOMER_ID;
 
 public class CustomerPersistenceEntityTestDataBuilder {
 

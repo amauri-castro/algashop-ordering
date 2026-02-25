@@ -1,30 +1,23 @@
 package com.algashop.ordering.presentation.order;
 
-import com.algashop.ordering.application.checkout.BuyNowInput;
-import com.algashop.ordering.application.checkout.BuyNowInputTestDataBuilder;
-import com.algashop.ordering.application.order.query.OrderDetailOutput;
-import com.algashop.ordering.domain.model.order.OrderId;
+import com.algashop.ordering.core.application.checkout.BuyNowInput;
+import com.algashop.ordering.core.application.checkout.BuyNowInputTestDataBuilder;
+import com.algashop.ordering.core.application.order.query.OrderDetailOutput;
+import com.algashop.ordering.core.domain.model.order.OrderId;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.persistence.order.OrderPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.persistence.shoppingcart.ShoppingCartPersistenceEntityRepository;
 import com.algashop.ordering.presentation.AbstractPresentationIT;
 import com.algashop.ordering.utils.AlgaShopResourceUtils;
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
 import io.restassured.RestAssured;
-import io.restassured.config.JsonConfig;
-import io.restassured.path.json.config.JsonPathConfig;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.util.UUID;
-
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
 
 public class OrderControllerIT extends AbstractPresentationIT {

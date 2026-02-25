@@ -1,6 +1,6 @@
 package com.algashop.ordering.infrastructure.notification.customer;
 
-import com.algashop.ordering.application.customer.notification.CustomerNotificationApplicationService;
+import com.algashop.ordering.core.application.customer.notification.CustomerNotificationApplicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

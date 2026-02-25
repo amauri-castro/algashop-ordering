@@ -1,8 +1,8 @@
 package com.algashop.ordering.infrastructure.beans;
 
-import com.algashop.ordering.domain.model.customer.LoyaltyPoints;
-import com.algashop.ordering.domain.model.order.CustomerHaveFreeShippingSpecification;
-import com.algashop.ordering.domain.model.order.Orders;
+import com.algashop.ordering.core.domain.model.customer.LoyaltyPoints;
+import com.algashop.ordering.core.domain.model.order.CustomerHaveFreeShippingSpecification;
+import com.algashop.ordering.core.domain.model.order.Orders;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

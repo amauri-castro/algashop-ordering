@@ -1,14 +1,18 @@
 package com.algashop.ordering.presentation.customer;
 
-import com.algashop.ordering.application.commons.AddressData;
-import com.algashop.ordering.application.customer.management.CustomerInput;
-import com.algashop.ordering.application.customer.management.CustomerManagementApplicationService;
-import com.algashop.ordering.application.customer.management.CustomerUpdateInput;
-import com.algashop.ordering.application.customer.query.*;
-import com.algashop.ordering.application.shoppingcart.query.ShoppingCartQueryService;
-import com.algashop.ordering.domain.model.DomainException;
-import com.algashop.ordering.domain.model.customer.CustomerEmailIsInUseException;
-import com.algashop.ordering.domain.model.customer.CustomerNotFoundException;
+import com.algashop.ordering.core.application.commons.AddressData;
+import com.algashop.ordering.core.application.customer.management.CustomerInput;
+import com.algashop.ordering.core.application.customer.management.CustomerManagementApplicationService;
+import com.algashop.ordering.core.application.customer.management.CustomerUpdateInput;
+import com.algashop.ordering.core.application.customer.query.*;
+import com.algashop.ordering.core.application.customer.query.CustomerFilter;
+import com.algashop.ordering.core.application.customer.query.CustomerOutput;
+import com.algashop.ordering.core.application.customer.query.CustomerQueryService;
+import com.algashop.ordering.core.application.customer.query.CustomerSummaryOutput;
+import com.algashop.ordering.core.application.shoppingcart.query.ShoppingCartQueryService;
+import com.algashop.ordering.core.domain.model.DomainException;
+import com.algashop.ordering.core.domain.model.customer.CustomerEmailIsInUseException;
+import com.algashop.ordering.core.domain.model.customer.CustomerNotFoundException;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;

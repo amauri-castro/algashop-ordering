@@ -1,10 +1,10 @@
 package com.algashop.ordering.infrastructure.persistence.provider;
 
-import com.algashop.ordering.domain.model.customer.Customer;
-import com.algashop.ordering.domain.model.customer.CustomerId;
-import com.algashop.ordering.domain.model.customer.CustomerTestDataBuilder;
-import com.algashop.ordering.domain.model.shoppingcart.ShoppingCart;
-import com.algashop.ordering.domain.model.shoppingcart.ShoppingCartTestDataBuilder;
+import com.algashop.ordering.core.domain.model.customer.Customer;
+import com.algashop.ordering.core.domain.model.customer.CustomerId;
+import com.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;
+import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCart;
+import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartTestDataBuilder;
 import com.algashop.ordering.infrastructure.persistence.AbstractPersistenceIT;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityDisassembler;

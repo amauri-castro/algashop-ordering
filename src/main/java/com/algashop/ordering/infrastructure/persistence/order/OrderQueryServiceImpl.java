@@ -1,9 +1,9 @@
 package com.algashop.ordering.infrastructure.persistence.order;
 
-import com.algashop.ordering.application.order.query.*;
-import com.algashop.ordering.application.utility.Mapper;
-import com.algashop.ordering.domain.model.order.OrderId;
-import com.algashop.ordering.domain.model.order.OrderNotFoundException;
+import com.algashop.ordering.core.application.order.query.*;
+import com.algashop.ordering.core.application.utility.Mapper;
+import com.algashop.ordering.core.domain.model.order.OrderId;
+import com.algashop.ordering.core.domain.model.order.OrderNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;

@@ -1,11 +1,11 @@
 package com.algashop.ordering.infrastructure.persistence.order;
 
-import com.algashop.ordering.domain.model.order.Order;
-import com.algashop.ordering.domain.model.order.OrderItem;
-import com.algashop.ordering.domain.model.commons.Address;
-import com.algashop.ordering.domain.model.order.Billing;
-import com.algashop.ordering.domain.model.order.Recipient;
-import com.algashop.ordering.domain.model.order.Shipping;
+import com.algashop.ordering.core.domain.model.order.Order;
+import com.algashop.ordering.core.domain.model.order.OrderItem;
+import com.algashop.ordering.core.domain.model.commons.Address;
+import com.algashop.ordering.core.domain.model.order.Billing;
+import com.algashop.ordering.core.domain.model.order.Recipient;
+import com.algashop.ordering.core.domain.model.order.Shipping;
 import com.algashop.ordering.infrastructure.persistence.commons.AddressEmbeddable;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
 import lombok.RequiredArgsConstructor;

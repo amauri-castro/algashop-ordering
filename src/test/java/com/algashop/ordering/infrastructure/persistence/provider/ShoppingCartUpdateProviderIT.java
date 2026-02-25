@@ -1,14 +1,14 @@
 package com.algashop.ordering.infrastructure.persistence.provider;
 
-import com.algashop.ordering.domain.model.commons.Money;
-import com.algashop.ordering.domain.model.commons.Quantity;
-import com.algashop.ordering.domain.model.customer.CustomerTestDataBuilder;
-import com.algashop.ordering.domain.model.product.Product;
-import com.algashop.ordering.domain.model.product.ProductId;
-import com.algashop.ordering.domain.model.product.ProductTestDataBuilder;
-import com.algashop.ordering.domain.model.shoppingcart.ShoppingCart;
-import com.algashop.ordering.domain.model.shoppingcart.ShoppingCartItem;
-import com.algashop.ordering.domain.model.shoppingcart.ShoppingCartTestDataBuilder;
+import com.algashop.ordering.core.domain.model.commons.Money;
+import com.algashop.ordering.core.domain.model.commons.Quantity;
+import com.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;
+import com.algashop.ordering.core.domain.model.product.Product;
+import com.algashop.ordering.core.domain.model.product.ProductId;
+import com.algashop.ordering.core.domain.model.product.ProductTestDataBuilder;
+import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCart;
+import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartItem;
+import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartTestDataBuilder;
 import com.algashop.ordering.infrastructure.persistence.AbstractPersistenceIT;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityAssembler;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityDisassembler;
