@@ -6,7 +6,7 @@ import com.algashop.ordering.core.application.order.query.OrderDetailOutput;
 import com.algashop.ordering.core.domain.model.order.OrderId;
 import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.persistence.order.OrderPersistenceEntityRepository;
-import com.algashop.ordering.infrastructure.persistence.shoppingcart.ShoppingCartPersistenceEntityRepository;
+import com.algashop.ordering.infrastructure.adapters.out.persistence.shoppingcart.ShoppingCartPersistenceEntityRepository;
 import com.algashop.ordering.presentation.AbstractPresentationIT;
 import com.algashop.ordering.utils.AlgaShopResourceUtils;
 import io.restassured.RestAssured;

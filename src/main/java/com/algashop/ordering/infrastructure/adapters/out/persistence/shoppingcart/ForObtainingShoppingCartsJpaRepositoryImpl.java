@@ -1,7 +1,6 @@
-package com.algashop.ordering.infrastructure.persistence.shoppingcart;
+package com.algashop.ordering.infrastructure.adapters.out.persistence.shoppingcart;
 
 import com.algashop.ordering.core.ports.in.shoppingcart.ShoppingCartOutput;
-import com.algashop.ordering.core.ports.in.shoppingcart.ForQueryingShoppingCarts;
 import com.algashop.ordering.core.application.utility.Mapper;
 import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartNotFoundException;
 import com.algashop.ordering.core.ports.out.shoppingcart.ForObtainingShoppingCarts;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class ShoppingCartQueryServiceImpl implements ForObtainingShoppingCarts {
+public class ForObtainingShoppingCartsJpaRepositoryImpl implements ForObtainingShoppingCarts {
 
     private final ShoppingCartPersistenceEntityRepository repository;
     private final Mapper mapper;
