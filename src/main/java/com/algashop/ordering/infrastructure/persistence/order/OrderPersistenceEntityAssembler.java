@@ -7,7 +7,7 @@ import com.algashop.ordering.core.domain.model.order.Billing;
 import com.algashop.ordering.core.domain.model.order.Recipient;
 import com.algashop.ordering.core.domain.model.order.Shipping;
 import com.algashop.ordering.infrastructure.persistence.commons.AddressEmbeddable;
-import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
+import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

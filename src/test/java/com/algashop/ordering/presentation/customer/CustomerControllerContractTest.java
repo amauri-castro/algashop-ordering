@@ -1,18 +1,19 @@
 package com.algashop.ordering.presentation.customer;
 
-import com.algashop.ordering.core.application.commons.AddressData;
-import com.algashop.ordering.core.application.customer.management.CustomerInput;
-import com.algashop.ordering.core.application.customer.management.CustomerManagementApplicationService;
-import com.algashop.ordering.core.application.customer.management.CustomerUpdateInput;
+import com.algashop.ordering.core.ports.in.commons.AddressData;
+import com.algashop.ordering.core.ports.in.customer.CustomerInput;
+import com.algashop.ordering.core.application.customer.CustomersManagementApplicationService;
+import com.algashop.ordering.core.ports.in.customer.CustomerUpdateInput;
 import com.algashop.ordering.core.application.customer.query.*;
-import com.algashop.ordering.core.application.customer.query.CustomerFilter;
-import com.algashop.ordering.core.application.customer.query.CustomerOutput;
-import com.algashop.ordering.core.application.customer.query.CustomerQueryService;
-import com.algashop.ordering.core.application.customer.query.CustomerSummaryOutput;
+import com.algashop.ordering.core.ports.in.customer.CustomerFilter;
+import com.algashop.ordering.core.ports.in.customer.CustomerOutput;
+import com.algashop.ordering.core.ports.in.customer.ForQueryingCustomers;
+import com.algashop.ordering.core.ports.in.customer.CustomerSummaryOutput;
 import com.algashop.ordering.core.ports.in.shoppingcart.ForQueryingShoppingCarts;
 import com.algashop.ordering.core.domain.model.DomainException;
 import com.algashop.ordering.core.domain.model.customer.CustomerEmailIsInUseException;
 import com.algashop.ordering.core.domain.model.customer.CustomerNotFoundException;
+import com.algashop.ordering.infrastructure.adapters.in.web.customer.CustomerController;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,10 +40,10 @@ class CustomerControllerContractTest {
     private WebApplicationContext context;
 
     @MockitoBean
-    private CustomerManagementApplicationService customerManagementApplicationService;
+    private CustomersManagementApplicationService customerManagementApplicationService;
 
     @MockitoBean
-    private CustomerQueryService customerQueryService;
+    private ForQueryingCustomers customerQueryService;
 
     @MockitoBean
     private ForQueryingShoppingCarts shoppingCartQueryService;

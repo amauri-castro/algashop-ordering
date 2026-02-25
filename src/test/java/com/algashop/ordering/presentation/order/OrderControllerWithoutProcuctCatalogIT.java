@@ -1,6 +1,6 @@
 package com.algashop.ordering.presentation.order;
 
-import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
+import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.persistence.order.OrderPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.adapters.out.persistence.shoppingcart.ShoppingCartPersistenceEntityRepository;
 import com.algashop.ordering.presentation.AbstractPresentationIT;

@@ -1,13 +1,11 @@
 package com.algashop.ordering.presentation.customer;
 
-import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
+import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algashop.ordering.presentation.AbstractPresentationIT;
 import com.algashop.ordering.utils.AlgaShopResourceUtils;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

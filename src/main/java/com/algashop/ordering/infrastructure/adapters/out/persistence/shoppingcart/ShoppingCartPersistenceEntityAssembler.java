@@ -2,7 +2,7 @@ package com.algashop.ordering.infrastructure.adapters.out.persistence.shoppingca
 
 import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCart;
 import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartItem;
-import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
+import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

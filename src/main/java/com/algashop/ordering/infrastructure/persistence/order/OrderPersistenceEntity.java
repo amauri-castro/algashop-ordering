@@ -1,6 +1,6 @@
 package com.algashop.ordering.infrastructure.persistence.order;
 
-import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntity;
+import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;

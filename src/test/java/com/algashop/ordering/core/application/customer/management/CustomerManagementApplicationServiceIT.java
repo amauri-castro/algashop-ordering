@@ -1,11 +1,14 @@
 package com.algashop.ordering.core.application.customer.management;
 
 import com.algashop.ordering.core.application.AbstractApplicationIT;
-import com.algashop.ordering.core.application.customer.notification.CustomerNotificationApplicationService;
-import com.algashop.ordering.core.application.customer.query.CustomerOutput;
-import com.algashop.ordering.core.application.customer.query.CustomerQueryService;
+import com.algashop.ordering.core.application.customer.CustomersManagementApplicationService;
+import com.algashop.ordering.core.ports.out.customer.ForNotifyingCustomers;
+import com.algashop.ordering.core.ports.in.customer.CustomerOutput;
+import com.algashop.ordering.core.ports.in.customer.ForQueryingCustomers;
 import com.algashop.ordering.core.domain.model.customer.*;
-import com.algashop.ordering.infrastructure.listener.customer.CustomerEventListener;
+import com.algashop.ordering.core.ports.in.customer.CustomerInput;
+import com.algashop.ordering.core.ports.in.customer.CustomerUpdateInput;
+import com.algashop.ordering.infrastructure.adapters.in.listener.customer.CustomerEventListener;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -19,16 +22,16 @@ import java.util.UUID;
 class CustomerManagementApplicationServiceIT extends AbstractApplicationIT {
 
     @Autowired
-    private CustomerManagementApplicationService customerManagementApplicationService;
+    private CustomersManagementApplicationService customerManagementApplicationService;
 
     @MockitoSpyBean
     private CustomerEventListener customerEventListener;
 
     @MockitoSpyBean
-    private CustomerNotificationApplicationService customerNotificationApplicationService;
+    private ForNotifyingCustomers customerNotificationApplicationService;
 
     @Autowired
-    private CustomerQueryService queryService;
+    private ForQueryingCustomers queryService;
 
     @Test
     public void shouldRegister() {
@@ -63,7 +66,7 @@ class CustomerManagementApplicationServiceIT extends AbstractApplicationIT {
                 .listen(Mockito.any(CustomerArchivedEvent.class));
 
         Mockito.verify(customerNotificationApplicationService)
-                .notifyNewRegistration(Mockito.any(CustomerNotificationApplicationService.NotifyNewRegistrationInput.class));
+                .notifyNewRegistration(Mockito.any(ForNotifyingCustomers.NotifyNewRegistrationInput.class));
     }
 
     @Test

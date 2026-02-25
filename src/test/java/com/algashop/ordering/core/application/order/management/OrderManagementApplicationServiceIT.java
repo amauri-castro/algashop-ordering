@@ -1,11 +1,11 @@
 package com.algashop.ordering.core.application.order.management;
 
 import com.algashop.ordering.core.application.AbstractApplicationIT;
-import com.algashop.ordering.core.application.customer.loyaltypoints.CustomerLoyaltyPointsApplicationService;
+import com.algashop.ordering.core.ports.in.customer.ForAddingLoyaltyPoints;
 import com.algashop.ordering.core.domain.model.order.*;
 import com.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;
 import com.algashop.ordering.core.domain.model.customer.Customers;
-import com.algashop.ordering.infrastructure.listener.order.OrderEventListener;
+import com.algashop.ordering.infrastructure.adapters.in.listener.order.OrderEventListener;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ class OrderManagementApplicationServiceIT extends AbstractApplicationIT {
     private OrderEventListener orderEventListener;
 
     @MockitoSpyBean
-    private CustomerLoyaltyPointsApplicationService loyaltyPointsApplicationService;
+    private ForAddingLoyaltyPoints loyaltyPointsApplicationService;
 
     @BeforeEach
     public void setup() {

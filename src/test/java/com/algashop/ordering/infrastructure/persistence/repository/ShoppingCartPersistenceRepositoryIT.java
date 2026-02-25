@@ -2,8 +2,8 @@ package com.algashop.ordering.infrastructure.persistence.repository;
 
 import com.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;
 import com.algashop.ordering.infrastructure.persistence.AbstractPersistenceIT;
-import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntity;
-import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
+import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntity;
+import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.persistence.entity.CustomerPersistenceEntityTestDataBuilder;
 import com.algashop.ordering.infrastructure.persistence.entity.ShoppingCartPersistenceEntityTestDataBuilder;
 import com.algashop.ordering.infrastructure.adapters.out.persistence.shoppingcart.ShoppingCartPersistenceEntity;

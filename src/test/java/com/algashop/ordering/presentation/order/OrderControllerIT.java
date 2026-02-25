@@ -4,7 +4,7 @@ import com.algashop.ordering.core.application.checkout.BuyNowInput;
 import com.algashop.ordering.core.application.checkout.BuyNowInputTestDataBuilder;
 import com.algashop.ordering.core.application.order.query.OrderDetailOutput;
 import com.algashop.ordering.core.domain.model.order.OrderId;
-import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
+import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.persistence.order.OrderPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.adapters.out.persistence.shoppingcart.ShoppingCartPersistenceEntityRepository;
 import com.algashop.ordering.presentation.AbstractPresentationIT;

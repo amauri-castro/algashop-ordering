@@ -1,6 +1,6 @@
 package com.algashop.ordering.core.application.order.query;
 
-import com.algashop.ordering.core.application.commons.AddressData;
+import com.algashop.ordering.core.ports.in.commons.AddressData;
 import com.algashop.ordering.core.domain.model.customer.CustomerId;
 import com.algashop.ordering.core.domain.model.order.OrderId;
 import com.algashop.ordering.core.domain.model.order.OrderItemId;

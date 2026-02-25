@@ -8,7 +8,7 @@ import com.algashop.ordering.infrastructure.persistence.order.OrderItemPersisten
 import com.algashop.ordering.infrastructure.persistence.order.OrderPersistenceEntity;
 import com.algashop.ordering.infrastructure.persistence.entity.OrderPersistenceEntityTestDataBuilder;
 import com.algashop.ordering.infrastructure.persistence.order.OrderPersistenceEntityAssembler;
-import com.algashop.ordering.infrastructure.persistence.customer.CustomerPersistenceEntityRepository;
+import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntityRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

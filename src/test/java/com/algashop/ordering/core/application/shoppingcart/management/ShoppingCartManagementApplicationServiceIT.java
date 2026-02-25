@@ -7,7 +7,7 @@ import com.algashop.ordering.core.domain.model.product.*;
 import com.algashop.ordering.core.domain.model.shoppingcart.*;
 import com.algashop.ordering.core.domain.model.commons.Quantity;
 import com.algashop.ordering.core.ports.in.shoppingcart.ShoppingCartItemInput;
-import com.algashop.ordering.infrastructure.listener.shoppingcart.ShoppingCartEventListener;
+import com.algashop.ordering.infrastructure.adapters.in.listener.shoppingcart.ShoppingCartEventListener;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

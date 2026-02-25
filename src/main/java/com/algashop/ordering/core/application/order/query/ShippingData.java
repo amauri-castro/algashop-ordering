@@ -1,6 +1,6 @@
 package com.algashop.ordering.core.application.order.query;
 
-import com.algashop.ordering.core.application.commons.AddressData;
+import com.algashop.ordering.core.ports.in.commons.AddressData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
