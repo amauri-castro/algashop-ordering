@@ -1,15 +1,15 @@
 package com.algashop.ordering.contract.base;
 
 import com.algashop.ordering.core.application.checkout.BuyNowApplicationService;
-import com.algashop.ordering.core.application.checkout.BuyNowInput;
+import com.algashop.ordering.core.ports.in.checkout.BuyNowInput;
 import com.algashop.ordering.core.application.checkout.CheckoutApplicationService;
-import com.algashop.ordering.core.application.checkout.CheckoutInput;
+import com.algashop.ordering.core.ports.in.checkout.CheckoutInput;
 import com.algashop.ordering.core.application.order.query.OrderDetailOutputTestDataBuilder;
-import com.algashop.ordering.core.application.order.query.OrderFilter;
-import com.algashop.ordering.core.application.order.query.OrderQueryService;
+import com.algashop.ordering.core.ports.in.order.OrderFilter;
 import com.algashop.ordering.core.application.order.query.OrderSummaryOutputTestDataBuilder;
 import com.algashop.ordering.core.domain.model.order.OrderNotFoundException;
-import com.algashop.ordering.presentation.order.OrderController;
+import com.algashop.ordering.core.ports.out.order.ForObtainingOrders;
+import com.algashop.ordering.infrastructure.adapters.in.web.order.OrderController;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
@@ -30,7 +30,7 @@ public class OrderBase {
     private WebApplicationContext context;
 
     @MockitoBean
-    private OrderQueryService orderQueryService;
+    private ForObtainingOrders orderQueryService;
 
     @MockitoBean
     private BuyNowApplicationService buyNowApplicationService;

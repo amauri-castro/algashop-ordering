@@ -1,6 +1,7 @@
 package com.algashop.ordering.core.application.order.management;
 
 import com.algashop.ordering.core.application.AbstractApplicationIT;
+import com.algashop.ordering.core.application.order.OrderManagementApplicationService;
 import com.algashop.ordering.core.ports.in.customer.ForAddingLoyaltyPoints;
 import com.algashop.ordering.core.domain.model.order.*;
 import com.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;

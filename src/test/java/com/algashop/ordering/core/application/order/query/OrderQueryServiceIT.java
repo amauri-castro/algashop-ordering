@@ -9,6 +9,10 @@ import com.algashop.ordering.core.domain.model.order.Order;
 import com.algashop.ordering.core.domain.model.order.OrderStatus;
 import com.algashop.ordering.core.domain.model.order.OrderTestDataBuilder;
 import com.algashop.ordering.core.domain.model.order.Orders;
+import com.algashop.ordering.core.ports.in.order.OrderFilter;
+import com.algashop.ordering.core.ports.out.order.ForObtainingOrders;
+import com.algashop.ordering.core.ports.out.order.OrderDetailOutput;
+import com.algashop.ordering.core.ports.out.order.OrderSummaryOutput;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +23,7 @@ import org.springframework.data.domain.Sort;
 class OrderQueryServiceIT extends AbstractApplicationIT {
 
     @Autowired
-    private OrderQueryService queryService;
+    private ForObtainingOrders queryService;
 
     @Autowired
     private Orders orders;

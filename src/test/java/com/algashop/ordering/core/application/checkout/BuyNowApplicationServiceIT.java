@@ -10,6 +10,7 @@ import com.algashop.ordering.core.domain.model.order.shipping.ShippingCostServic
 import com.algashop.ordering.core.domain.model.product.Product;
 import com.algashop.ordering.core.domain.model.product.ProductCatalogService;
 import com.algashop.ordering.core.domain.model.product.ProductTestDataBuilder;
+import com.algashop.ordering.core.ports.in.checkout.BuyNowInput;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

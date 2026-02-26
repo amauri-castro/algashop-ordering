@@ -11,6 +11,7 @@ import com.algashop.ordering.core.domain.model.order.shipping.OriginAddressServi
 import com.algashop.ordering.core.domain.model.order.shipping.ShippingCostService;
 import com.algashop.ordering.core.domain.model.product.Product;
 import com.algashop.ordering.core.domain.model.product.ProductTestDataBuilder;
+import com.algashop.ordering.core.ports.in.checkout.CheckoutInput;
 import com.algashop.ordering.infrastructure.adapters.in.listener.order.OrderEventListener;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

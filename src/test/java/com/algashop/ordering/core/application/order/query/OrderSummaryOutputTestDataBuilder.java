@@ -2,6 +2,8 @@ package com.algashop.ordering.core.application.order.query;
 
 import com.algashop.ordering.core.domain.model.customer.CustomerId;
 import com.algashop.ordering.core.domain.model.order.OrderId;
+import com.algashop.ordering.core.ports.out.order.CustomerMinimalOutput;
+import com.algashop.ordering.core.ports.out.order.OrderSummaryOutput;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;

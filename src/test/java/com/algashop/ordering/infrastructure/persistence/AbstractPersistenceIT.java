@@ -1,5 +1,6 @@
 package com.algashop.ordering.infrastructure.persistence;
 
+import com.algashop.ordering.infrastructure.config.auditing.SpringDataAuditingConfig;
 import com.algashop.ordering.utils.TestcontainerPostgreSQLConfig;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
