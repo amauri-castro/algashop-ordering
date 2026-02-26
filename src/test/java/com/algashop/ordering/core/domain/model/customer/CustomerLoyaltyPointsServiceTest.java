@@ -1,10 +1,10 @@
 package com.algashop.ordering.core.domain.model.customer;
 
+import com.algashop.ordering.core.domain.model.commons.Quantity;
 import com.algashop.ordering.core.domain.model.order.Order;
 import com.algashop.ordering.core.domain.model.order.OrderStatus;
 import com.algashop.ordering.core.domain.model.order.OrderTestDataBuilder;
 import com.algashop.ordering.core.domain.model.product.Product;
-import com.algashop.ordering.core.domain.model.commons.Quantity;
 import com.algashop.ordering.core.domain.model.product.ProductTestDataBuilder;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

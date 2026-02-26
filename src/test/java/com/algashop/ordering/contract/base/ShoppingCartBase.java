@@ -1,7 +1,7 @@
 package com.algashop.ordering.contract.base;
 
 import com.algashop.ordering.core.application.shoppingcart.ShoppingCartManagementApplicationService;
-import com.algashop.ordering.core.application.shoppingcart.query.ShoppingCartOutputTestDataBuilder;
+import com.algashop.ordering.core.application.shoppingcart.ShoppingCartOutputTestDataBuilder;
 import com.algashop.ordering.core.ports.in.shoppingcart.ForQueryingShoppingCarts;
 import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartNotFoundException;
 import com.algashop.ordering.infrastructure.adapters.in.web.shoppingcart.ShoppingCartController;

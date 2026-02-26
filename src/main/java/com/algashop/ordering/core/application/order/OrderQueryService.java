@@ -15,12 +15,10 @@ public class OrderQueryService implements ForQueryingOrders {
 
     private final ForObtainingOrders forObtainingOrders;
 
-    @Override
     public OrderDetailOutput findById(String id) {
         return forObtainingOrders.findById(id);
     }
 
-    @Override
     public Page<OrderSummaryOutput> filter(OrderFilter filter) {
         return forObtainingOrders.filter(filter);
     }

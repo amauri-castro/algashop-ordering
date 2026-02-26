@@ -1,10 +1,6 @@
 package com.algashop.ordering.core.domain.model.customer;
 
 import com.algashop.ordering.core.domain.model.commons.*;
-import com.algashop.ordering.core.domain.model.customer.BirthDate;
-import com.algashop.ordering.core.domain.model.customer.Customer;
-import com.algashop.ordering.core.domain.model.customer.CustomerId;
-import com.algashop.ordering.core.domain.model.customer.LoyaltyPoints;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;

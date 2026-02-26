@@ -1,7 +1,7 @@
 package com.algashop.ordering.core.domain.model.customer;
 
-import com.algashop.ordering.core.domain.model.commons.*;
 import com.algashop.ordering.core.domain.model.AbstractDomainIT;
+import com.algashop.ordering.core.domain.model.commons.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
