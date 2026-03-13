@@ -28,9 +28,9 @@ class ShippingCostServiceIT extends AbstractDomainIT {
     @BeforeEach
     public void setup() {
         wireMockRapidex = new WireMockServer(options()
+                .templatingEnabled(true)
                 .port(8880)
                 .usingFilesUnderDirectory("src/test/resources/wiremock/rapidex")
-                .extensions(new ResponseTemplateTransformer(true))
         );
 
         wireMockRapidex.start();
