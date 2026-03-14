@@ -24,6 +24,7 @@ public class ShoppingCartManagementApplicationService implements ForManagingShop
     private final ProductCatalogService productCatalogService;
     private final ShoppingService shoppingService;
 
+    @Transactional
     @Override
     public void addItem(ShoppingCartItemInput input) {
         Objects.requireNonNull(input);
