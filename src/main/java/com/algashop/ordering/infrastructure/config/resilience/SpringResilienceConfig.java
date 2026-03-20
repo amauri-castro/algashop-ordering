@@ -1,4 +1,4 @@
-package com.algashop.ordering.infrastructure.config.spring;
+package com.algashop.ordering.infrastructure.config.resilience;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.resilience.annotation.EnableResilientMethods;
