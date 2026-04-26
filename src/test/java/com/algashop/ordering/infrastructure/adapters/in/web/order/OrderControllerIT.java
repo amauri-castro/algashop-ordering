@@ -54,8 +54,7 @@ public class OrderControllerIT extends AbstractPresentationIT {
     public void shouldCreateOrderUsingProduct() {
 
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-product.json");
-        String createdOrderId = RestAssured
-                .given()
+        String createdOrderId = givenAuthenticated()
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType("application/vnd.order-with-product.v1+json")
                     .body(json)
@@ -84,8 +83,7 @@ public class OrderControllerIT extends AbstractPresentationIT {
                 .creditCardId(creditCardId)
                 .build();
 
-        OrderDetailOutput orderDetailOutput = RestAssured
-                .given()
+        OrderDetailOutput orderDetailOutput = givenAuthenticated()
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType("application/vnd.order-with-product.v1+json")
                     .body(input)
@@ -113,8 +111,7 @@ public class OrderControllerIT extends AbstractPresentationIT {
     public void shouldNotCreateOrderUsingProductWhenProductNotExists() {
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-invalid-product.json");
 
-        RestAssured
-                .given()
+        givenAuthenticated()
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType("application/vnd.order-with-product.v1+json")
                     .body(json)
@@ -130,8 +127,7 @@ public class OrderControllerIT extends AbstractPresentationIT {
     public void shouldNotCreateOrderUsingProductWhenCustomerWasNotFound() {
 
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-product-and-invalid-customer.json");
-        RestAssured
-                .given()
+        givenAuthenticated()
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType("application/vnd.order-with-product.v1+json")
                     .body(json)
@@ -148,8 +144,7 @@ public class OrderControllerIT extends AbstractPresentationIT {
 
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-shoppingcart.json");
 
-        OrderDetailOutput orderDetailOutput = RestAssured
-                .given()
+        OrderDetailOutput orderDetailOutput = givenAuthenticated()
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType("application/vnd.order-with-shopping-cart.v1+json")
                     .body(json)
@@ -177,8 +172,7 @@ public class OrderControllerIT extends AbstractPresentationIT {
         String json = AlgaShopResourceUtils
                 .readContent("json/create-order-with-invalid-shoppingcart.json");
 
-        RestAssured
-                .given()
+        givenAuthenticated()
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType("application/vnd.order-with-shopping-cart.v1+json")
                     .body(json)

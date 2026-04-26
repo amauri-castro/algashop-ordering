@@ -1,11 +1,10 @@
 package com.algashop.ordering.infrastructure.adapters.in.web.order;
 
+import com.algashop.ordering.infrastructure.adapters.in.web.AbstractPresentationIT;
 import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.adapters.out.persistence.order.OrderPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.adapters.out.persistence.shoppingcart.ShoppingCartPersistenceEntityRepository;
-import com.algashop.ordering.infrastructure.adapters.in.web.AbstractPresentationIT;
 import com.algashop.ordering.utils.AlgaShopResourceUtils;
-import io.restassured.RestAssured;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,10 +12,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.UUID;
 
-
+@TestPropertySource(properties = {
+        "algashop.integrations.product-catalog.url=http://localhost:9999"
+})
 public class OrderControllerWithoutProcuctCatalogIT extends AbstractPresentationIT {
 
     private static final UUID validCustomerId = UUID.fromString("6e148bd5-47f6-4022-b9da-07cfaa294f7a");
@@ -50,19 +52,16 @@ public class OrderControllerWithoutProcuctCatalogIT extends AbstractPresentation
     @Test
     public void shouldNotCreateOrderUsingProductWhenProductAPIIsUnavailable() {
 
-        wireMockProductCatalog.stop();
-
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-product.json");
-        RestAssured
-                .given()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType("application/vnd.order-with-product.v1+json")
-                .body(json)
+        givenAuthenticated()
+                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                    .contentType("application/vnd.order-with-product.v1+json")
+                    .body(json)
                 .when()
-                .post("/api/v1/orders")
+                    .post("/api/v1/orders")
                 .then()
                 .assertThat()
-                .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                .statusCode(HttpStatus.GATEWAY_TIMEOUT.value());
+                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                    .statusCode(HttpStatus.GATEWAY_TIMEOUT.value());
     }
 }

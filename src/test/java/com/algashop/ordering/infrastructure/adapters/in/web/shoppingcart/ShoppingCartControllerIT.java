@@ -49,8 +49,7 @@ public class ShoppingCartControllerIT extends AbstractPresentationIT {
     public void shouldCreateShoppingCart() {
         String json = AlgaShopResourceUtils.readContent("json/create-shopping-cart.json");
 
-        UUID createdShoppingCart = RestAssured
-            .given()
+        UUID createdShoppingCart = givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(json)
@@ -71,8 +70,7 @@ public class ShoppingCartControllerIT extends AbstractPresentationIT {
     public void shouldNotCreateShoppingCartWithInvalidData() {
         String json = AlgaShopResourceUtils.readContent("json/create-shopping-cart-invalid.json");
 
-        RestAssured
-                .given()
+        givenAuthenticated()
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .body(json)
@@ -89,8 +87,7 @@ public class ShoppingCartControllerIT extends AbstractPresentationIT {
 
         String json = AlgaShopResourceUtils.readContent("json/add-product-to-shopping-cart.json");
 
-        RestAssured
-            .given()
+        givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(json)
@@ -110,8 +107,7 @@ public class ShoppingCartControllerIT extends AbstractPresentationIT {
 
         String json = AlgaShopResourceUtils.readContent("json/add-product-to-shopping-cart.json");
 
-        RestAssured
-                .given()
+        givenAuthenticated()
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .body(json)

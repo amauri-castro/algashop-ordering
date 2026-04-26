@@ -4,6 +4,7 @@ import com.algashop.ordering.core.ports.in.customer.*;
 import com.algashop.ordering.core.ports.in.shoppingcart.ForQueryingShoppingCarts;
 import com.algashop.ordering.core.ports.in.shoppingcart.ShoppingCartOutput;
 import com.algashop.ordering.infrastructure.adapters.in.web.PageModel;
+import com.algashop.ordering.infrastructure.config.config.SecurityAnnotations;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.UUID;
 
+import static com.algashop.ordering.infrastructure.config.config.SecurityAnnotations.*;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -27,6 +29,7 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @CanWriteCustomers
     public CustomerOutput create(@RequestBody @Valid CustomerInput input, HttpServletResponse httpServletResponse) {
         UUID customerId = forManagingCustomers.create(input);
         UriComponentsBuilder builder = fromMethodCall(on(CustomerController.class).findById(customerId));
@@ -35,21 +38,25 @@ public class CustomerController {
     }
 
     @GetMapping
+    @CanReadCustomers
     public PageModel<CustomerSummaryOutput> findAll(CustomerFilter customerFilter) {
         return PageModel.of(forQueryingCustomers.filter(customerFilter));
     }
 
     @GetMapping("/{customerId}")
+    @CanReadCustomers
     public CustomerOutput findById(@PathVariable UUID customerId) {
         return forQueryingCustomers.findById(customerId);
     }
 
     @GetMapping("/{customerId}/shopping-cart")
+    @CanReadShoppingCarts
     public ShoppingCartOutput findShoppingCartByCustomerId(@PathVariable UUID customerId) {
         return forQueryingShoppingCarts.findByCustomerId(customerId);
     }
 
     @PutMapping("/{customerId}")
+    @CanWriteCustomers
     public CustomerOutput update(@PathVariable UUID customerId,
                                  @RequestBody @Valid CustomerUpdateInput input) {
         forManagingCustomers.update(customerId, input);
@@ -58,6 +65,7 @@ public class CustomerController {
 
     @DeleteMapping("/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CanWriteCustomers
     public void delete(@PathVariable UUID customerId) {
         forManagingCustomers.archive(customerId);
     }
