@@ -3,7 +3,6 @@ package com.algashop.ordering.infrastructure.adapters.in.web.customer;
 import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.adapters.in.web.AbstractPresentationIT;
 import com.algashop.ordering.utils.AlgaShopResourceUtils;
-import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,7 +81,7 @@ public class CustomerControllerIT extends AbstractPresentationIT {
     }
 
     @Test
-    public void ShouldNotArchiveInexistentCustomer() {
+    public void shouldNotArchiveInexistentCustomer() {
         givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -91,6 +90,37 @@ public class CustomerControllerIT extends AbstractPresentationIT {
                 .assertThat()
                 .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
                 .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void shouldReturnForbiddenWhenCreatingCustomerWithoutWriteScope() {
+        String json = AlgaShopResourceUtils.readContent("json/create-customer.json");
+
+        givenAuthenticatedWithNoScopeToken()
+                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .body(json)
+                .when()
+                    .post("/api/v1/customers")
+                .then()
+                    .assertThat()
+                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+                    .statusCode(HttpStatus.FORBIDDEN.value());
+    }
+
+    @Test
+    public void shouldReturnUnauthorizedWhenExpiredTokenIsGiven() {
+        String json = AlgaShopResourceUtils.readContent("json/create-customer.json");
+
+        givenWithExpiredToken()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(json)
+                .when()
+                .post("/api/v1/customers")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 
 
