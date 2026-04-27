@@ -4,7 +4,6 @@ import com.algashop.ordering.core.ports.in.customer.*;
 import com.algashop.ordering.core.ports.in.shoppingcart.ForQueryingShoppingCarts;
 import com.algashop.ordering.core.ports.in.shoppingcart.ShoppingCartOutput;
 import com.algashop.ordering.infrastructure.adapters.in.web.PageModel;
-import com.algashop.ordering.infrastructure.config.config.SecurityAnnotations;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.UUID;
 
-import static com.algashop.ordering.infrastructure.config.config.SecurityAnnotations.*;
+import static com.algashop.ordering.infrastructure.config.security.SecurityAnnotations.*;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 

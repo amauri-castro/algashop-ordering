@@ -13,13 +13,12 @@ import com.algashop.ordering.core.ports.out.order.OrderDetailOutput;
 import com.algashop.ordering.core.ports.out.order.OrderSummaryOutput;
 import com.algashop.ordering.infrastructure.adapters.in.web.PageModel;
 import com.algashop.ordering.infrastructure.adapters.in.web.exceptionhandler.UnprocessableEntityException;
-import com.algashop.ordering.infrastructure.config.config.SecurityAnnotations;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import static com.algashop.ordering.infrastructure.config.config.SecurityAnnotations.*;
+import static com.algashop.ordering.infrastructure.config.security.SecurityAnnotations.*;
 
 @RestController
 @RequestMapping(path = "/api/v1/orders")

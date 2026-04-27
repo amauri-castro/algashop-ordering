@@ -1,4 +1,4 @@
-package com.algashop.ordering.infrastructure.config.config;
+package com.algashop.ordering.infrastructure.config.security;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.algashop.ordering.infrastructure.config.config.SecurityAnnotations.CanPreviewShippingCosts;
+import static com.algashop.ordering.infrastructure.config.security.SecurityAnnotations.CanPreviewShippingCosts;
 
 @RestController
 @RequiredArgsConstructor
