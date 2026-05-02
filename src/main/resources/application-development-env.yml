@@ -25,22 +25,24 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://127.0.0.1:8081
-    client:
-      provider:
-        algashop-as:
-          issuer-uri: http://127.0.0.1:8081
-      registration:
-        algashop-ordering-service-client:
-          provider: algashop-as
-          client-id: algashop-ordering-service
-          client-secret: secret123
-          authorization-grant-type: client_credentials
-          client-authentication-method: client_secret_basic
-          scope: products:read
+      client:
+        provider:
+          algashop-as:
+            issuer-uri: http://127.0.0.1:8081
+        registration:
+          algashop-ordering-service-client:
+            provider: algashop-as
+            client-id: algashop-ordering-service
+            client-secret: secret123
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_basic
+            scope: products:read
 
 algashop:
   integrations:
     shipping.provider: RAPIDEX
     rapidex.url: http://localhost:8787
-    product-catalog.url: http://localhost:8083
+    product-catalog:
+      url: http://localhost:8083
+      oauth2-client-registration-id: algashop-ordering-service-client
 

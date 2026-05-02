@@ -41,7 +41,11 @@ public class ResilientProductCatalogAPIClient {
         this.circuitBreaker = (FrameworkRetryCircuitBreaker) circuitBreakerFactory.create(productCatalogCBId);
     }
 
-    @Cacheable(cacheNames = "algashop:product-catalog-api:v1", key = "#productId")
+    @Cacheable(
+            cacheNames = "algashop:product-catalog-api:v1",
+            key = "#productId",
+            unless="#result == null"
+    )
     @ConcurrencyLimit(10)
     public Optional<ProductResponse> getById(UUID productId) {
         log.info("Trying to load product {}", productId);
@@ -69,18 +73,12 @@ public class ResilientProductCatalogAPIClient {
 
     private Optional<ProductResponse> loadProduct(UUID productId) {
         log.info("Loading product {}", productId);
-
         try {
             return Optional.ofNullable(productCatalogAPIClient.getById(productId));
-        } catch (HttpClientErrorException e) {
-            if (!(e instanceof HttpClientErrorException.NotFound)) {
-                log.warn("Client HTTP Error when loading product {}", productId, e);
-            }
+        } catch (HttpClientErrorException.NotFound e) {
             return Optional.empty();
         } catch (RestClientException e) {
             throw translateException(e);
-        } catch (NoFallbackAvailableException e) {
-            throw new BadGatewayException("Product Catalog API Bad Gateway", e);
         }
     }
 
