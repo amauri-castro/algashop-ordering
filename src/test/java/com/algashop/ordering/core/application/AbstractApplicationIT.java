@@ -4,6 +4,7 @@ import com.algashop.ordering.core.application.security.SecurityCheckApplicationS
 import com.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;
 import com.algashop.ordering.utils.MockJwtDecoderConfig;
 import com.algashop.ordering.utils.TestcontainerPostgreSQLConfig;
+import com.algashop.ordering.utils.WithMockJwt;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
@@ -16,16 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({TestcontainerPostgreSQLConfig.class, MockJwtDecoderConfig.class})
+@WithMockJwt
 public abstract class AbstractApplicationIT {
-
-    @MockitoBean
-    protected SecurityCheckApplicationService securityCheckApplicationService;
-
-    @BeforeEach
-    public void preSetup() {
-        Mockito.when(securityCheckApplicationService.isCustomer()).thenReturn(true);
-        Mockito.when(securityCheckApplicationService.getAuthenticatedUserId())
-                .thenReturn(CustomerTestDataBuilder.DEFAULT_CUSTOMER_ID.value());
-    }
 
 }

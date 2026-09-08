@@ -11,6 +11,7 @@ import com.algashop.ordering.core.domain.model.product.Product;
 import com.algashop.ordering.core.domain.model.product.ProductCatalogService;
 import com.algashop.ordering.core.domain.model.product.ProductTestDataBuilder;
 import com.algashop.ordering.core.ports.in.checkout.BuyNowInput;
+import com.algashop.ordering.utils.WithMockJwt;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,7 @@ class BuyNowApplicationServiceIT extends AbstractApplicationIT {
     }
 
     @Test
+    //@WithMockJwt(role = "ADMIN")
     public void shouldBuyNow() {
         Product product = ProductTestDataBuilder.aProductMacbook().build();
         Mockito.when(productCatalogService.ofId(product.id()))
