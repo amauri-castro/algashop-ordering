@@ -9,10 +9,11 @@ import com.algashop.ordering.core.domain.model.order.Order;
 import com.algashop.ordering.core.domain.model.order.OrderStatus;
 import com.algashop.ordering.core.domain.model.order.OrderTestDataBuilder;
 import com.algashop.ordering.core.domain.model.order.Orders;
+import com.algashop.ordering.core.ports.in.order.ForQueryingOrders;
 import com.algashop.ordering.core.ports.in.order.OrderFilter;
 import com.algashop.ordering.core.ports.out.order.OrderDetailOutput;
 import com.algashop.ordering.core.ports.out.order.OrderSummaryOutput;
-import com.algashop.ordering.infrastructure.adapters.out.persistence.order.ForObtainingOrdersJpaRepositoryImpl;
+import com.algashop.ordering.utils.WithMockJwt;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import org.springframework.data.domain.Sort;
 class OrderQueryServiceIT extends AbstractApplicationIT {
 
     @Autowired
-    private ForObtainingOrdersJpaRepositoryImpl queryService;
+    private ForQueryingOrders queryService;
 
     @Autowired
     private Orders orders;
@@ -149,6 +150,7 @@ class OrderQueryServiceIT extends AbstractApplicationIT {
     }
 
     @Test
+    @WithMockJwt(role = "", audiences = "machine-client-id", subject = "machine-client-id")
     public void shouldOrderByStatus() {
         Customer customer1 = CustomerTestDataBuilder.existingCustomer().build();
         customers.add(customer1);
