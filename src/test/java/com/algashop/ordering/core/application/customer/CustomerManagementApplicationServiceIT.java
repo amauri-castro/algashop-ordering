@@ -36,7 +36,7 @@ class CustomerManagementApplicationServiceIT extends AbstractApplicationIT {
     public void shouldRegister() {
         CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
 
-        UUID customerId = customerManagementApplicationService.create(input);
+        UUID customerId = customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), input);
         Assertions.assertThat(customerId).isNotNull();
 
         CustomerOutput customerOutput = queryService.findById(customerId);
@@ -73,7 +73,7 @@ class CustomerManagementApplicationServiceIT extends AbstractApplicationIT {
         CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
         CustomerUpdateInput updateInput = CustomerUpdateInputTestDataBuilder.aCustomerUpdate().build();
 
-        UUID customerId = customerManagementApplicationService.create(input);
+        UUID customerId = customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), input);
         Assertions.assertThat(customerId).isNotNull();
 
         customerManagementApplicationService.update(customerId, updateInput);
@@ -101,7 +101,7 @@ class CustomerManagementApplicationServiceIT extends AbstractApplicationIT {
     @Test
     public void shouldArchive() {
         CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
-        UUID customerId = customerManagementApplicationService.create(input);
+        UUID customerId = customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), input);
         Assertions.assertThat(customerId).isNotNull();
 
         customerManagementApplicationService.archive(customerId);
@@ -146,7 +146,7 @@ class CustomerManagementApplicationServiceIT extends AbstractApplicationIT {
     @Test
     public void shouldThrowCustomerArchivedExceptionWhenArchivingAlreadyArchivedCustomer() {
         CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
-        UUID customerId = customerManagementApplicationService.create(input);
+        UUID customerId = customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), input);
         Assertions.assertThat(customerId).isNotNull();
 
         customerManagementApplicationService.archive(customerId);
@@ -160,7 +160,7 @@ class CustomerManagementApplicationServiceIT extends AbstractApplicationIT {
     public void shouldChangeEmail() {
         CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
 
-        UUID customerId = customerManagementApplicationService.create(input);
+        UUID customerId = customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), input);
         Assertions.assertThat(customerId).isNotNull();
 
         customerManagementApplicationService.changeEmail(customerId, "testemail@gmail.com");
@@ -182,7 +182,7 @@ class CustomerManagementApplicationServiceIT extends AbstractApplicationIT {
     @Test
     public void shouldThrowCustomerArchivedExceptionWhenChangeEmailOfArchivedCustomer() {
         CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
-        UUID customerId = customerManagementApplicationService.create(input);
+        UUID customerId = customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), input);
         Assertions.assertThat(customerId).isNotNull();
 
         customerManagementApplicationService.archive(customerId);
@@ -196,7 +196,7 @@ class CustomerManagementApplicationServiceIT extends AbstractApplicationIT {
     public void shouldTrownIllegalArgumentExceptionWhenInvalidEmail() {
         CustomerInput input = CustomerInputTestDataBuilder.aCustomer().build();
 
-        UUID customerId = customerManagementApplicationService.create(input);
+        UUID customerId = customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), input);
         Assertions.assertThat(customerId).isNotNull();
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
@@ -213,8 +213,8 @@ class CustomerManagementApplicationServiceIT extends AbstractApplicationIT {
                 .email("jonhcena@gmail.com")
                 .build();
 
-        UUID customerId1 = customerManagementApplicationService.create(input1);
-        UUID customerId2 = customerManagementApplicationService.create(input2);
+        UUID customerId1 = customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), input1);
+        UUID customerId2 = customerManagementApplicationService.create(securityChecks.getAuthenticatedUserId(), input2);
 
         Assertions.assertThat(customerId1).isNotNull();
         Assertions.assertThat(customerId2).isNotNull();

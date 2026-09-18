@@ -18,6 +18,7 @@ class CustomerRegistrationServiceIT extends AbstractDomainIT {
     public void shouldRegister() {
 
         Customer customer = customerRegistrationService.register(
+                new CustomerId(),
                 new FullName("Jhon", "Doe"),
                 new BirthDate(LocalDate.of(1992, 8, 12)),
                 new Email("john.doe@gmail.com"),

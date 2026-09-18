@@ -32,12 +32,14 @@ public class Customer
     private Long version;
 
     @Builder(builderClassName = "BrandNewCustomerBuild", builderMethodName = "brandNew")
-    private static Customer createBrandNew(FullName fullName, BirthDate birthDate, Email email,
+    private static Customer createBrandNew(CustomerId id, FullName fullName, BirthDate birthDate, Email email,
                                           Phone phone, Document document, Boolean promotionNotificationsAllowed,
                                           Address address) {
-
+        if (id == null) {
+            id = new CustomerId();
+        }
         Customer customer = new Customer(
-                new CustomerId(),
+                id,
                 fullName,
                 birthDate,
                 email,
