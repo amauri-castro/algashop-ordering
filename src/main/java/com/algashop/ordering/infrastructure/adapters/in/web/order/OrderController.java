@@ -1,24 +1,17 @@
 package com.algashop.ordering.infrastructure.adapters.in.web.order;
 
-import com.algashop.ordering.core.application.checkout.BuyNowApplicationService;
-import com.algashop.ordering.core.application.checkout.CheckoutApplicationService;
-import com.algashop.ordering.core.domain.model.customer.CustomerNotFoundException;
-import com.algashop.ordering.core.domain.model.product.ProductNotFoundException;
-import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartNotFoundException;
-import com.algashop.ordering.core.ports.in.checkout.BuyNowInput;
-import com.algashop.ordering.core.ports.in.checkout.CheckoutInput;
 import com.algashop.ordering.core.ports.in.order.ForQueryingOrders;
 import com.algashop.ordering.core.ports.in.order.OrderFilter;
 import com.algashop.ordering.core.ports.out.order.OrderDetailOutput;
 import com.algashop.ordering.core.ports.out.order.OrderSummaryOutput;
 import com.algashop.ordering.infrastructure.adapters.in.web.PageModel;
-import com.algashop.ordering.infrastructure.adapters.in.web.exceptionhandler.UnprocessableEntityException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import static com.algashop.ordering.infrastructure.config.security.SecurityAnnotations.*;
+import static com.algashop.ordering.infrastructure.config.security.SecurityAnnotations.CanReadOrders;
 
 @RestController
 @RequestMapping(path = "/api/v1/orders")
@@ -26,8 +19,6 @@ import static com.algashop.ordering.infrastructure.config.security.SecurityAnnot
 public class OrderController {
 
     private final ForQueryingOrders forQueryingOrders;
-    private final CheckoutApplicationService checkoutApplicationService;
-    private final BuyNowApplicationService buyNowApplicationService;
 
     @GetMapping("/{orderId}")
     @CanReadOrders
@@ -41,29 +32,4 @@ public class OrderController {
         return PageModel.of(forQueryingOrders.filter(filter));
     }
 
-    @PostMapping(consumes = "application/vnd.order-with-product.v1+json")
-    @ResponseStatus(HttpStatus.CREATED)
-    @CanWriteOrders
-    public OrderDetailOutput createWithProduct(@RequestBody @Valid BuyNowInput input) {
-        String orderId;
-        try {
-            orderId = buyNowApplicationService.buyNow(input);
-        } catch (CustomerNotFoundException | ProductNotFoundException e) {
-            throw new UnprocessableEntityException(e.getMessage(), e);
-        }
-        return forQueryingOrders.findById(orderId);
-    }
-
-    @PostMapping(consumes = "application/vnd.order-with-shopping-cart.v1+json")
-    @ResponseStatus(HttpStatus.CREATED)
-    @CanWriteOrders
-    public OrderDetailOutput createWithShoppingCart(@RequestBody @Valid CheckoutInput input) {
-        String orderId;
-        try {
-            orderId = checkoutApplicationService.checkout(input);
-        } catch (CustomerNotFoundException | ShoppingCartNotFoundException e) {
-            throw new UnprocessableEntityException(e.getMessage(), e);
-        }
-        return forQueryingOrders.findById(orderId);
-    }
 }

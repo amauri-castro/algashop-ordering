@@ -32,7 +32,7 @@ public class ShoppingCartManagementApplicationService implements ForManagingShop
         ProductId productId = new ProductId(input.getProductId());
 
         ShoppingCart shoppingCart = shoppingCarts.ofId(shoppingCartId)
-                .orElseThrow(() -> new ShoppingCartNotFoundException());
+                .orElseThrow(() -> new ShoppingCartNotFoundException(shoppingCartId.value()));
 
         Product product = productCatalogService.ofId(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
@@ -60,7 +60,7 @@ public class ShoppingCartManagementApplicationService implements ForManagingShop
         Objects.requireNonNull(rawShoppingCartItemId);
 
         ShoppingCart shoppingCart = shoppingCarts.ofId(new ShoppingCartId(rawShoppingCartId))
-                .orElseThrow(() -> new ShoppingCartNotFoundException());
+                .orElseThrow(() -> new ShoppingCartNotFoundException(rawShoppingCartId));
 
         shoppingCart.removeItem(new ShoppingCartItemId(rawShoppingCartItemId));
 
@@ -73,7 +73,7 @@ public class ShoppingCartManagementApplicationService implements ForManagingShop
         Objects.requireNonNull(rawShoppingCartId);
 
         ShoppingCart shoppingCart = shoppingCarts.ofId(new ShoppingCartId(rawShoppingCartId))
-                .orElseThrow(() -> new ShoppingCartNotFoundException());
+                .orElseThrow(() -> new ShoppingCartNotFoundException(rawShoppingCartId));
 
         shoppingCart.empty();
 
@@ -86,7 +86,7 @@ public class ShoppingCartManagementApplicationService implements ForManagingShop
         Objects.requireNonNull(rawShoppingCartId);
 
         ShoppingCart shoppingCart = shoppingCarts.ofId(new ShoppingCartId(rawShoppingCartId))
-                .orElseThrow(() -> new ShoppingCartNotFoundException());
+                .orElseThrow(() -> new ShoppingCartNotFoundException(rawShoppingCartId));
 
         shoppingCarts.remove(shoppingCart);
     }

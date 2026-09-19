@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -35,6 +36,13 @@ public class ForObtainingOrdersJpaRepositoryImpl implements ForObtainingOrders {
     @Override
     public OrderDetailOutput findById(String id) {
         OrderPersistenceEntity entity = repository.findById(new OrderId(id).value().toLong())
+                .orElseThrow(() -> new OrderNotFoundException());
+        return mapper.convert(entity, OrderDetailOutput.class);
+    }
+
+    @Override
+    public OrderDetailOutput findByAndCustomerId(String id, UUID customerId) {
+        OrderPersistenceEntity entity = repository.findByIdAndCustomerId(new OrderId(id).value().toLong(), customerId)
                 .orElseThrow(() -> new OrderNotFoundException());
         return mapper.convert(entity, OrderDetailOutput.class);
     }

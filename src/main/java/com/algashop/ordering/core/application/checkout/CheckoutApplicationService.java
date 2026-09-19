@@ -6,6 +6,7 @@ import com.algashop.ordering.core.application.security.SecurityChecks;
 import com.algashop.ordering.core.domain.model.DomainException;
 import com.algashop.ordering.core.domain.model.commons.ZipCode;
 import com.algashop.ordering.core.domain.model.customer.Customer;
+import com.algashop.ordering.core.domain.model.customer.CustomerId;
 import com.algashop.ordering.core.domain.model.customer.CustomerNotFoundException;
 import com.algashop.ordering.core.domain.model.customer.Customers;
 import com.algashop.ordering.core.domain.model.order.*;
@@ -13,7 +14,6 @@ import com.algashop.ordering.core.domain.model.order.shipping.OriginAddressServi
 import com.algashop.ordering.core.domain.model.order.shipping.ShippingCostService;
 import com.algashop.ordering.core.domain.model.product.ProductCatalogService;
 import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCart;
-import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartId;
 import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCartNotFoundException;
 import com.algashop.ordering.core.domain.model.shoppingcart.ShoppingCarts;
 import com.algashop.ordering.core.ports.in.checkout.CheckoutInput;
@@ -52,19 +52,22 @@ public class CheckoutApplicationService implements ForBuyingWithShoppingCart {
         PaymentMethod paymentMethod = PaymentMethod.valueOf(input.getPaymentMethod());
         CreditCardId creditCardId = null;
 
+        CustomerId customerId = new CustomerId(input.getCustomerId());
+        Customer customer = customers.ofId(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException(customerId));
+
         if (paymentMethod.equals(PaymentMethod.CREDIT_CARD)) {
             if (input.getCreditCardId() == null) {
                 throw new DomainException("Credit card id is required");
             }
             creditCardId = new CreditCardId(input.getCreditCardId());
         }
-        ShoppingCartId shoppingCartId = new ShoppingCartId(input.getShoppingCartId());
-        ShoppingCart shoppingCart = shoppingCarts.ofId(shoppingCartId)
-                .orElseThrow(() -> new ShoppingCartNotFoundException(shoppingCartId.value()));
+
+        ShoppingCart shoppingCart = shoppingCarts.ofCustomer(customerId)
+                .orElseThrow(() -> ShoppingCartNotFoundException.ofCustomer(customerId.value()));
 
         verifyCanOrderFor(shoppingCart.customerId().value());
 
-        Customer customer = customers.ofId(shoppingCart.customerId()).orElseThrow(() -> new CustomerNotFoundException());
 
         var calculationResult = calculateShippingCost(input.getShipping());
 

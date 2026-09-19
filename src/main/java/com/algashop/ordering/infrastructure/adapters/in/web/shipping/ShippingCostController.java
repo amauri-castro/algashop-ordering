@@ -17,8 +17,8 @@ public class ShippingCostController {
 
     private final ShippingApplicationService shippingApplicationService;
 
-    @PostMapping("/api/v1/shipping-cost-previews")
     @CanPreviewShippingCosts
+    @PostMapping("/api/v1/shipping-cost-previews")
     public ShippingCostPreviewOutput previewShippingCost(@RequestBody @Valid ShippingCostPreviewInput input) {
         return shippingApplicationService.previewCost(input);
     }
