@@ -9,7 +9,6 @@ import com.algashop.ordering.infrastructure.adapters.out.persistence.order.Order
 import com.algashop.ordering.infrastructure.adapters.out.persistence.shoppingcart.ShoppingCartPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.adapters.in.web.AbstractPresentationIT;
 import com.algashop.ordering.utils.AlgaShopResourceUtils;
-import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
@@ -33,7 +32,7 @@ public class OrderControllerIT extends AbstractPresentationIT {
     private OrderPersistenceEntityRepository orderRepository;
 
     @Autowired
-    private ShoppingCartPersistenceEntityRepository shoppingCartPersistenceEntityRepository;
+    private ShoppingCartPersistenceEntityRepository shoppingCartRepository;
 
     @BeforeEach
     public void setup() {
@@ -51,6 +50,41 @@ public class OrderControllerIT extends AbstractPresentationIT {
     }
 
     @Test
+    public void shouldListOrdersWhenAuthenticatedAsAdmin() {
+        givenAuthenticatedAdmin()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("/api/v1/orders")
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void shouldNotListAdministrativeOrdersWhenAuthenticatedAsCustomer() {
+        givenAuthenticated()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("/api/v1/orders")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.FORBIDDEN.value());
+    }
+
+    @Test
+    public void shouldListMyOrdersWhenAuthenticatedAsCustomer() {
+        givenAuthenticated()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("/api/v1/customers/me/orders")
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
     public void shouldCreateOrderUsingProduct() {
 
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-product.json");
@@ -59,7 +93,7 @@ public class OrderControllerIT extends AbstractPresentationIT {
                     .contentType("application/vnd.order-with-product.v1+json")
                     .body(json)
                 .when()
-                    .post("/api/v1/orders")
+                    .post("/api/v1/customers/me/orders")
                 .then()
                     .assertThat()
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -79,7 +113,6 @@ public class OrderControllerIT extends AbstractPresentationIT {
         UUID creditCardId = UUID.randomUUID();
         BuyNowInput input = BuyNowInputTestDataBuilder.aBuyNowInput()
                 .productId(validProductId)
-                .customerId(validCustomerId)
                 .creditCardId(creditCardId)
                 .build();
 
@@ -88,7 +121,7 @@ public class OrderControllerIT extends AbstractPresentationIT {
                     .contentType("application/vnd.order-with-product.v1+json")
                     .body(input)
                 .when()
-                    .post("/api/v1/orders")
+                    .post("/api/v1/customers/me/orders")
                 .then()
                     .assertThat()
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -116,27 +149,28 @@ public class OrderControllerIT extends AbstractPresentationIT {
                     .contentType("application/vnd.order-with-product.v1+json")
                     .body(json)
                 .when()
-                    .post("/api/v1/orders")
+                    .post("/api/v1/customers/me/orders")
                 .then()
                     .assertThat()
                     .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                    .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value());
+                    .statusCode(HttpStatus.UNPROCESSABLE_CONTENT.value());
+
     }
 
     @Test
     public void shouldNotCreateOrderUsingProductWhenCustomerWasNotFound() {
 
         String json = AlgaShopResourceUtils.readContent("json/create-order-with-product-and-invalid-customer.json");
-        givenAuthenticated()
+        givenAuthenticatedUnknownCustomer()
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType("application/vnd.order-with-product.v1+json")
                     .body(json)
                 .when()
-                    .post("/api/v1/orders")
+                    .post("/api/v1/customers/me/orders")
                 .then()
                     .assertThat()
                     .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                    .statusCode(HttpStatus.FORBIDDEN.value());
+                    .statusCode(HttpStatus.UNPROCESSABLE_CONTENT.value());
     }
 
     @Test
@@ -149,7 +183,7 @@ public class OrderControllerIT extends AbstractPresentationIT {
                     .contentType("application/vnd.order-with-shopping-cart.v1+json")
                     .body(json)
                 .when()
-                    .post("/api/v1/orders")
+                    .post("/api/v1/customers/me/orders")
                 .then()
                     .assertThat()
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -166,21 +200,4 @@ public class OrderControllerIT extends AbstractPresentationIT {
         Assertions.assertThat(orderExists).isTrue();
     }
 
-    @Test
-    public void shouldNotCreateOrderUsingInexistentShoppingCart() {
-
-        String json = AlgaShopResourceUtils
-                .readContent("json/create-order-with-invalid-shoppingcart.json");
-
-        givenAuthenticated()
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
-                    .contentType("application/vnd.order-with-shopping-cart.v1+json")
-                    .body(json)
-                .when()
-                    .post("/api/v1/orders")
-                .then()
-                    .assertThat()
-                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
 }

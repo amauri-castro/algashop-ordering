@@ -12,6 +12,10 @@ public class CustomerTestDataBuilder {
             UUID.fromString("6e148bd5-47f6-4022-b9da-07cfaa294f7a")
     );
 
+    public static final CustomerId ALTERNATIVE_CUSTOMER_ID = new CustomerId(
+            UUID.fromString("6e148bd5-47f6-4022-b9da-07cfaa294f73")
+    );
+
     private CustomerTestDataBuilder() {
     }
 

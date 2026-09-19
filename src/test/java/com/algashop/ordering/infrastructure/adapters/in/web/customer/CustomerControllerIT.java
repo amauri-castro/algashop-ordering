@@ -3,8 +3,11 @@ package com.algashop.ordering.infrastructure.adapters.in.web.customer;
 import com.algashop.ordering.infrastructure.adapters.out.persistence.customer.CustomerPersistenceEntityRepository;
 import com.algashop.ordering.infrastructure.adapters.in.web.AbstractPresentationIT;
 import com.algashop.ordering.utils.AlgaShopResourceUtils;
+import com.algashop.ordering.utils.MockJwtFactory;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,72 +31,114 @@ public class CustomerControllerIT extends AbstractPresentationIT {
         super.beforeEach();
     }
 
+    @BeforeAll
+    public static void setupBeforeAll() {
+        AbstractPresentationIT.initWireMock();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        AbstractPresentationIT.stopMock();
+    }
+
     @Test
-    public void shouldCreateCustomer() {
+    public void shouldCreateMyCustomerProfile() {
         String json = AlgaShopResourceUtils.readContent("json/create-customer.json");
 
-        UUID createdCustomerId = givenAuthenticated()
+        UUID createdCustomerId = givenAuthenticatedUnknownCustomer()
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .body(json)
                 .when()
-                    .post("/api/v1/customers")
+                    .post("/api/v1/customers/me")
                 .then()
                     .assertThat()
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .statusCode(HttpStatus.CREATED.value())
-                    .body("id", Matchers.not(Matchers.emptyString()))
-                .extract().jsonPath().getUUID("id");
+                    .header("Location", Matchers.containsString("/api/v1/customers/me"))
+                    .body("id", Matchers.is(MockJwtFactory.UNKNOWN_CUSTOMER_SUBJECT))
+                    .extract()
+                .jsonPath().getUUID("id");
 
         Assertions.assertThat(customerRepository.existsById(createdCustomerId)).isTrue();
 
     }
 
     @Test
-    public void shouldNotCreateCustomerWhenInvalid() {
+    public void shouldNotCreateMyCustomerProfileWhenInvalid() {
         String json = AlgaShopResourceUtils.readContent("json/create-invalid-customer.json");
 
         givenAuthenticated()
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .body(json)
-                .when()
-                    .post("/api/v1/customers")
-                .then()
-                    .assertThat()
-                    .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
-
-    }
-
-    @Test
-    public void shouldArchiveCustomer() {
-        givenAuthenticated()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(json)
                 .when()
-                .delete("/api/v1/customers/{customerId}", validCustomerId)
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.NO_CONTENT.value());
-
-        Assertions.assertThat(customerRepository.existsById(validCustomerId)).isTrue();
-        Assertions.assertThat(customerRepository.findById(validCustomerId).orElseThrow().getArchived()).isTrue();
-    }
-
-    @Test
-    public void shouldNotArchiveInexistentCustomer() {
-        givenAuthenticated()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .delete("/api/v1/customers/{customerId}", invalidCustomerId)
+                .post("/api/v1/customers/me")
                 .then()
                 .assertThat()
                 .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
-                .statusCode(HttpStatus.NOT_FOUND.value());
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+
     }
 
     @Test
-    public void shouldReturnForbiddenWhenCreatingCustomerWithoutWriteScope() {
+    public void shouldLoadMyCustomerProfile() {
+        givenAuthenticated()
+                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                    .get("/api/v1/customers/me")
+                .then()
+                    .assertThat()
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .statusCode(HttpStatus.OK.value())
+                    .body("id", Matchers.is(validCustomerId.toString()));
+    }
+
+    @Test
+    public void shouldUpdateMyCustomerProfile() {
+        givenAuthenticated()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(updateCustomerJson())
+                .when()
+                .put("/api/v1/customers/me")
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .statusCode(HttpStatus.OK.value())
+                .body("id", Matchers.is(validCustomerId.toString()));
+
+        Assertions.assertThat(customerRepository.findById(validCustomerId).orElseThrow().getFirstName())
+                .isEqualTo("John");
+    }
+
+    @Test
+    public void shouldListCustomersWhenAuthenticatedAsAdmin() {
+        givenAuthenticatedAdmin()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("/api/v1/customers")
+                .then()
+                .assertThat()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void shouldReturnForbiddenWhenListingCustomersAsCustomer() {
+        givenAuthenticated()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("/api/v1/customers")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.FORBIDDEN.value());
+    }
+
+
+
+    @Test
+    public void shouldReturnForbiddenWhenCreatingMyCustomerProfileWithoutWriteScope() {
         String json = AlgaShopResourceUtils.readContent("json/create-customer.json");
 
         givenAuthenticatedWithNoScopeToken()
@@ -101,7 +146,7 @@ public class CustomerControllerIT extends AbstractPresentationIT {
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .body(json)
                 .when()
-                    .post("/api/v1/customers")
+                    .post("/api/v1/customers/me")
                 .then()
                     .assertThat()
                     .contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE)
@@ -117,11 +162,31 @@ public class CustomerControllerIT extends AbstractPresentationIT {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(json)
                 .when()
-                .post("/api/v1/customers")
+                .post("/api/v1/customers/me")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 
+
+    private String updateCustomerJson() {
+        return """
+        {
+          "firstName": "John",
+          "lastName": "Doe",
+          "phone": "1191234564",
+          "promotionNotificationsAllowed": false,
+          "address": {
+            "street": "Bourbon Street",
+            "number": "2000",
+            "complement": "apt 122",
+            "neighborhood": "North Ville",
+            "city": "Yostfort",
+            "state": "South Carolina",
+            "zipCode": "12321"
+          }
+        }
+        """;
+    }
 
 }

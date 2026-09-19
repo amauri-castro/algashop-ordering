@@ -13,7 +13,7 @@ public class CustomerOutputTestDataBuilder {
   return CustomerOutput.builder()
     .id(UUID.randomUUID())
     .registeredAt(OffsetDateTime.now())
-    .phone("11211244545")
+    .phone("1191234564")
     .email("johndoe@email.com")
     .firstName("John")
     .lastName("Doe")
@@ -24,12 +24,12 @@ public class CustomerOutputTestDataBuilder {
     .archived(false)
     .address(AddressData.builder()
       .street("Bourbon Street")
-      .number("2500")
-      .complement("apt 201")
+      .number("2000")
+      .complement("apt 122")
       .neighborhood("North Ville")
       .city("Yostfort")
       .state("South Carolina")
-      .zipCode("13232")
+      .zipCode("12321")
       .build());
  }
 

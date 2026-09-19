@@ -75,7 +75,6 @@ class CheckoutApplicationServiceIT extends AbstractApplicationIT {
         shoppingCarts.add(shoppingCart);
 
         CheckoutInput input = CheckoutInputTestDataBuilder.aCheckoutInput()
-                .customerId(shoppingCart.id().value())
                 .build();
 
 
@@ -100,7 +99,6 @@ class CheckoutApplicationServiceIT extends AbstractApplicationIT {
     @Test
     void shouldThrowShoppingCartNotFoundExceptionWhenCheckoutWithNonExistingShoppingCart() {
         CheckoutInput input = CheckoutInputTestDataBuilder.aCheckoutInput()
-                .customerId(UUID.randomUUID())
                 .build();
 
         Assertions.assertThatExceptionOfType(ShoppingCartNotFoundException.class)
@@ -113,7 +111,6 @@ class CheckoutApplicationServiceIT extends AbstractApplicationIT {
         shoppingCarts.add(shoppingCart);
 
         CheckoutInput input = CheckoutInputTestDataBuilder.aCheckoutInput()
-                .customerId(shoppingCart.id().value())
                 .build();
 
         Assertions.assertThatExceptionOfType(ShoppingCartCantProceedToCheckoutException.class)
@@ -131,10 +128,10 @@ class CheckoutApplicationServiceIT extends AbstractApplicationIT {
         shoppingCarts.add(shoppingCart);
 
         CheckoutInput input = CheckoutInputTestDataBuilder.aCheckoutInput()
-                .customerId(shoppingCart.id().value())
                 .build();
 
         Assertions.assertThatExceptionOfType(ShoppingCartCantProceedToCheckoutException.class)
                 .isThrownBy(() -> service.checkout(input));
     }
+
 }

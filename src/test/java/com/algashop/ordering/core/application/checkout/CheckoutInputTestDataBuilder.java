@@ -1,5 +1,6 @@
 package com.algashop.ordering.core.application.checkout;
 
+import com.algashop.ordering.core.domain.model.customer.CustomerTestDataBuilder;
 import com.algashop.ordering.core.ports.in.checkout.CheckoutInput;
 import com.algashop.ordering.core.ports.in.commons.AddressData;
 import com.algashop.ordering.core.ports.in.order.BillingData;
@@ -12,7 +13,7 @@ public class CheckoutInputTestDataBuilder {
 
     public static CheckoutInput.CheckoutInputBuilder aCheckoutInput() {
         return CheckoutInput.builder()
-                .customerId(UUID.randomUUID())
+                .customerId(CustomerTestDataBuilder.DEFAULT_CUSTOMER_ID.value())
                 .paymentMethod("CREDIT_CARD")
                 .creditCardId(UUID.randomUUID())
                 .shipping(ShippingInput.builder()
