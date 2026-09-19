@@ -5,7 +5,7 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make {
     request {
         method GET()
-        urlPath("/api/v1/shopping-carts/ad265aa3-c77d-46e9-9782-b70c487c1e17/items")
+        urlPath("/api/v1/customers/me/shopping-cart")
     }
     response {
         status 200
@@ -13,6 +13,10 @@ Contract.make {
             contentType('application/json')
         }
         body([
+                id: anyUuid(),
+                customerId: anyUuid(),
+                totalItems: 3,
+                totalAmount: 1250.00,
                 items: [
                         [
                                 id: anyUuid(),

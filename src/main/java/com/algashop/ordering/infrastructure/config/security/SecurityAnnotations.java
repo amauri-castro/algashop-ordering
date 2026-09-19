@@ -16,6 +16,11 @@ public class SecurityAnnotations {
 
     @Target({ElementType.METHOD, ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
+    @PreAuthorize("hasAuthority('SCOPE_shipping-costs:preview')")
+    public @interface CanPreviewShippingCosts {}
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasAuthority('SCOPE_customers:read') and not hasRole('CUSTOMER')")
     public @interface CanReadCustomers {}
 
@@ -26,25 +31,18 @@ public class SecurityAnnotations {
 
     @Target({ElementType.METHOD, ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
-    @PreAuthorize("hasAuthority('SCOPE_shopping-carts:write')")
-    public @interface CanWriteShoppingCarts {}
-
-    @Target({ElementType.METHOD, ElementType.TYPE})
-    @Retention(RetentionPolicy.RUNTIME)
-    @PreAuthorize("hasAuthority('SCOPE_shipping-costs:preview')")
-    public @interface CanPreviewShippingCosts {}
-
-    @Target({ElementType.METHOD, ElementType.TYPE})
-    @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasAuthority('SCOPE_customers:write') and hasRole('CUSTOMER')")
-    public @interface CanWriteMyCustomerProfile {
-    }
+    public @interface CanWriteMyCustomerProfile {}
 
     @Target({ElementType.METHOD, ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
     @PreAuthorize("hasAuthority('SCOPE_customers:read') and hasRole('CUSTOMER')")
-    public @interface CanReadMyCustomerProfile {
-    }
+    public @interface CanReadMyCustomerProfile {}
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @PreAuthorize("hasAuthority('SCOPE_orders:write') and hasRole('CUSTOMER')")
+    public @interface CanWriteMyOrders {}
 
     @Target({ElementType.METHOD, ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
@@ -53,6 +51,11 @@ public class SecurityAnnotations {
 
     @Target({ElementType.METHOD, ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
-    @PreAuthorize("hasAuthority('SCOPE_orders:write') and hasRole('CUSTOMER')")
-    public @interface CanWriteMyOrders {}
+    @PreAuthorize("hasAuthority('SCOPE_shopping-carts:read') and hasRole('CUSTOMER')")
+    public @interface CanReadMyShoppingCart {}
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @PreAuthorize("hasAuthority('SCOPE_shopping-carts:write') and hasRole('CUSTOMER')")
+    public @interface CanWriteMyShoppingCart {}
 }

@@ -66,13 +66,13 @@ public class ShoppingCartPersistenceEntity extends AbstractAggregateRoot<Shoppin
         this.replaceItems(items);
     }
 
-    public void replaceItems(Set<ShoppingCartItemPersistenceEntity> items) {
-        if (items == null || items.isEmpty()) {
+    public void replaceItems(Set<ShoppingCartItemPersistenceEntity> updatedItems) {
+        if (updatedItems == null || updatedItems.isEmpty()) {
             this.setItems(new HashSet<>());
             return;
         }
-        items.forEach(i -> i.setShoppingCart(this));
-        this.setItems(items);
+        updatedItems.forEach(i -> i.setShoppingCart(this));
+        this.setItems(updatedItems);
     }
 
     public void addItem(ShoppingCartItemPersistenceEntity item) {
