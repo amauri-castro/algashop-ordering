@@ -37,6 +37,7 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2025.1.0")
+	set('springCloudAwsVersion', "4.0.0")
 }
 
 dependencyManagement {
@@ -58,6 +59,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server'
 	implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-framework-retry'
+
+	implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:${springCloudAwsVersion}")
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter-secrets-manager'
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter-parameter-store'
 
 	implementation 'org.flywaydb:flyway-database-postgresql'
 	implementation 'commons-validator:commons-validator:1.10.1'

@@ -11,6 +11,14 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
+  cloud:
+    aws:
+      credentials:
+        access-key: test
+        secret-key: test
+      region:
+        static: us-east-1
+      endpoint: http://algashop-localstack:4566
   flyway:
     enabled: true
     locations: classpath:db/migration,classpath:db/clean
