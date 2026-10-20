@@ -63,6 +63,7 @@ dependencies {
 	implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:${springCloudAwsVersion}")
 	implementation 'io.awspring.cloud:spring-cloud-aws-starter-secrets-manager'
 	implementation 'io.awspring.cloud:spring-cloud-aws-starter-parameter-store'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
 	implementation 'org.flywaydb:flyway-database-postgresql'
 	implementation 'commons-validator:commons-validator:1.10.1'
