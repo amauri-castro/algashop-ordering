@@ -17,8 +17,11 @@ import com.algashop.ordering.infrastructure.adapters.in.web.exceptionhandler.Unp
 import com.algashop.ordering.infrastructure.config.security.SecurityAnnotations;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Duration;
 
 @RestController
 @RequestMapping(path = "/api/v1/customers/me/orders")
@@ -46,7 +49,12 @@ public class MyOrdersController {
     @SecurityAnnotations.CanWriteMyOrders
     @PostMapping(consumes = "application/vnd.order-with-product.v1+json")
     @ResponseStatus(HttpStatus.CREATED)
+    @SneakyThrows
     public OrderDetailOutput createWithProduct(@RequestBody @Valid BuyNowInput input) {
+        if (Math.random() < 0.5) {
+            Thread.sleep(Duration.ofMillis(100));
+            throw new RuntimeException("Fake exception");
+        }
         input.setCustomerId(securityChecks.getAuthenticatedUserId());
         String orderId;
         try {
